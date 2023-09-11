@@ -1,0 +1,4 @@
+<resources>
+    <string name="internet_message"></string>
+    <string name="permission_message"></string>
+</resources>
