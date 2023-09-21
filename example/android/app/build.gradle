@@ -33,24 +33,21 @@ android {
     ndkVersion flutter.ndkVersion
 
     compileOptions {
-        sourceCompatibility JavaVersion.VERSION_1_8
-        targetCompatibility JavaVersion.VERSION_1_8
+        sourceCompatibility JavaVersion.VERSION_11
+        targetCompatibility JavaVersion.VERSION_11
     }
 
     kotlinOptions {
-        jvmTarget = '1.8'
+        jvmTarget = '11'
     }
 
-    sourceSets {
-        main.java.srcDirs += 'src/main/kotlin'
-    }
 
     defaultConfig {
         // TODO: Specify your own unique Application ID (https://developer.android.com/studio/build/application-id.html).
         applicationId "jio.coresdk.coresdk_plugin_example"
         // You can update the following values to match your application needs.
         // For more information, see: https://docs.flutter.dev/deployment/android#reviewing-the-gradle-build-configuration.
-        minSdkVersion 23
+        minSdkVersion 21
         targetSdkVersion flutter.targetSdkVersion
         versionCode flutterVersionCode.toInteger()
         versionName flutterVersionName
@@ -72,13 +69,11 @@ flutter {
 repositories {
     maven {
         credentials {
-            username "PrateekJio"
-            password "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"
+            username "Akhil111singh"
+            password "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"
         }
-        url "https://maven.pkg.github.com/JioMeet/JioMeetTemplateSDK_ANDROID"
+        url = uri("https://maven.pkg.github.com/JioMeet/JioMeetCoreTemplateSDK_ANDROID")
     }
-    google()
-    mavenCentral()
 }
 
 dependencies {

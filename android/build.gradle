@@ -22,12 +22,12 @@ buildscript {
     }
 }
 
-allprojects {
+/*allprojects {
     repositories {
         google()
         mavenCentral()
     }
-}
+}*/
 
 apply plugin: 'com.android.library'
 apply plugin: 'kotlin-android'
@@ -38,8 +38,8 @@ android {
     compileSdkVersion 31
 
     compileOptions {
-        sourceCompatibility JavaVersion.VERSION_1_8
-        targetCompatibility JavaVersion.VERSION_1_8
+        sourceCompatibility JavaVersion.VERSION_11
+        targetCompatibility JavaVersion.VERSION_11
     }
 
     buildFeatures {
@@ -51,43 +51,24 @@ android {
     }
 
     kotlinOptions {
-        jvmTarget = '1.8'
+        jvmTarget = '11'
     }
 
-    sourceSets {
-        main.java.srcDirs += 'src/main/kotlin'
-        test.java.srcDirs += 'src/test/kotlin'
-    }
+
 
     defaultConfig {
-        minSdkVersion 16
+        minSdkVersion 21
     }
 
-    dependencies {
-        testImplementation 'org.jetbrains.kotlin:kotlin-test'
-        testImplementation 'org.mockito:mockito-core:5.0.0'
-    }
-
-    testOptions {
-        unitTests.all {
-            useJUnitPlatform()
-
-            testLogging {
-               events "passed", "skipped", "failed", "standardOut", "standardError"
-               outputs.upToDateWhen {false}
-               showStandardStreams = true
-            }
-        }
-    }
 }
 
 repositories {
     maven {
         credentials {
-            username "PrateekJio"
-            password "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"
+            username "Akhil111singh"
+            password "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"
         }
-        url "https://maven.pkg.github.com/JioMeet/JioMeetTemplateSDK_ANDROID"
+        url = uri("https://maven.pkg.github.com/JioMeet/JioMeetCoreTemplateSDK_ANDROID")
     }
     google()
     mavenCentral()
