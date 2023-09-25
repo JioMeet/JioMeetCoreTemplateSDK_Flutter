@@ -1,0 +1,81 @@
+
+group 'jio.coresdk.coresdk_plugin'
+version '0.0.1'
+
+buildscript {
+    ext {
+        kotlin_version = '1.7.20'
+        hiltVersion = "2.44"
+    }
+    repositories {
+        google()
+        mavenCentral()
+    }
+
+    dependencies {
+        classpath 'com.android.tools.build:gradle:7.3.0'
+        classpath "org.jetbrains.kotlin:kotlin-gradle-plugin:$kotlin_version"
+        classpath "com.google.dagger:hilt-android-gradle-plugin:$hiltVersion"
+    }
+}
+
+def credentialsProperties = new Properties()
+def credentialsPropertiesFile = rootProject.file('credentials.properties')
+if (credentialsPropertiesFile.exists()) {
+    credentialsProperties.load(new FileInputStream(credentialsPropertiesFile))
+}
+
+apply plugin: 'com.android.library'
+apply plugin: 'kotlin-android'
+apply plugin: 'kotlin-kapt'
+apply plugin: 'com.google.dagger.hilt.android'
+
+android {
+    compileSdkVersion 31
+
+    compileOptions {
+        sourceCompatibility JavaVersion.VERSION_11
+        targetCompatibility JavaVersion.VERSION_11
+    }
+
+    buildFeatures {
+        // Enables Jetpack Compose for this module
+        compose true
+    }
+    composeOptions {
+        kotlinCompilerExtensionVersion "1.3.2"
+    }
+
+    kotlinOptions {
+        jvmTarget = '11'
+    }
+
+
+
+    defaultConfig {
+        minSdkVersion 21
+    }
+
+}
+rootProject.allprojects {
+    repositories {
+        maven {
+            credentials {
+                username credentialsProperties['username']
+                password credentialsProperties['password']
+            }
+            url = uri("https://maven.pkg.github.com/JioMeet/JioMeetCoreTemplateSDK_ANDROID")
+        }
+        google()
+        mavenCentral()
+    }
+}
+
+dependencies {
+    implementation 'androidx.appcompat:appcompat:1.6.1'
+    implementation 'androidx.constraintlayout:constraintlayout:2.1.4'
+    implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk8:1.8.10"
+    api "com.google.dagger:hilt-android:$hiltVersion"
+    kapt "com.google.dagger:hilt-android-compiler:$hiltVersion"
+    implementation 'com.jiomeet.platform:jiomeetcoretemplatesdk:2.1.8'
+}
