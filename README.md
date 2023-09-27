@@ -50,7 +50,7 @@ You need to  add the necessary configurations to your   project's `pubspec.yaml`
   coresdk_plugin:
     git:
       url: https://github.com/JioMeet/JioMeetCoreTemplateSDK_Flutter.git
-      ref: 0.0.1
+      ref: 0.0.2
 ```
 
 #### Hilt:
