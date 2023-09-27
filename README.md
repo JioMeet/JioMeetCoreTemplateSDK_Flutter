@@ -1,12 +1,16 @@
-# Flutter JioMeet Core Template SDK Plugin
-
+# Flutter core sdk plugin
 ## Table of Contents -
 
 1. [Introduction](#introduction)
 2. [Features](#features)
 3. [Prerequisites](#prerequisites)
-   - [Add Plugin](#add-plugin)
-   - [Hilt](#hilt)
+   - [Android](#android)
+      - [Add Plugin](#add-plugin)
+      - [Hilt](#hilt)
+   - [iOS](#ios)
+      - [Require Configurations](#require-configurations)
+      - [Info.plist Changes](#infoplist-changes)
+      - [Enable Background Mode](#enable-background-mode)
 4. [Setup](#setup)
 5. [Usage](#usage)
 6. [Example](#Example)
@@ -37,6 +41,7 @@ In Flutter Plugin , you'll find a range of powerful features designed to enhance
 
 Before you begin, ensure you have met the following requirements:
 
+### Android:
 #### Add plugin:
 
 You need to  add the necessary configurations to your   project's `pubspec.yaml` file:
@@ -107,10 +112,34 @@ class MyApplication : Application {
 </application>
 ```
 ---
+### iOS
+### Require Configurations
 
+Before getting started with this example app, please ensure you have the following software installed on your machine:
+
+- Xcode 14.2 or later.
+- Swift 5.0 or later.
+- An iOS device or emulator running iOS 13.0 or later.
+
+### Info.plist Changes
+
+Please add below permissions keys to your `Info.plist` file with proper description.
+
+```swift
+<key>NSCameraUsageDescription</key>
+<string>Allow access to camera for meetings</string>
+<key>NSMicrophoneUsageDescription</key>
+<string>Allow access to mic for meetings</string>
+```
+
+### Enable Background Mode
+
+Please enable `Background Modes` in your project `Signing & Capibilities` tab. After enabling please check box with option `Audio, Airplay, and Pictures in Pictures`. If you don't enables this setting, your mic will be muted when your app goes to background.
+
+---
 ## Setup
 
-##### Register on JioMeet Platform:
+#### Register on JioMeet Platform:
 
 You need to first register on Jiomeet platform.[Click here to sign up](https://platform.jiomeet.com/login/signUp)
 
@@ -174,67 +203,67 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 
 void main() {
-  runApp(const MyApp());
+   runApp(const MyApp());
 }
 
 class MyApp extends StatefulWidget {
-  const MyApp({super.key});
+   const MyApp({super.key});
 
-  @override
-  State<MyApp> createState() => _MyAppState();
+   @override
+   State<MyApp> createState() => _MyAppState();
 }
 
 class _MyAppState extends State<MyApp> {
-  final _coresdkPlugin = JioCoreSdkPlugin();
-  static const platform = MethodChannel('coresdk_plugin');
-  String _meetingStatus = 'Not started';
+   final _coresdkPlugin = JioCoreSdkPlugin();
+   static const platform = MethodChannel('coresdk_plugin');
+   String _meetingStatus = 'Not started';
 
-  @override
-  void initState() {
-    super.initState();
-    coreSdkPluginCallbacks();
-  }
+   @override
+   void initState() {
+      super.initState();
+      coreSdkPluginCallbacks();
+   }
 
-  Future<void> coreSdkPluginCallbacks() async {
-    platform.setMethodCallHandler((call) async {
-      if (call.method == "meetingEnded") {
-        setState(() {
-          _meetingStatus = "Ended";
-        });
-      }
-    });
-  }
+   Future<void> coreSdkPluginCallbacks() async {
+      platform.setMethodCallHandler((call) async {
+         if (call.method == "meetingEnded") {
+            setState(() {
+               _meetingStatus = "Ended";
+            });
+         }
+      });
+   }
 
-  @override
-  Widget build(BuildContext context) {
-    return MaterialApp(
-      home: Scaffold(
-        appBar: AppBar(
-          title: const Text('Plugin example app'),
-        ),
-        body: Center(
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.center,
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: [
-              Text('meeting Status:  $_meetingStatus\n'),
-              TextButton(
-                onPressed: () async {
-                  try {
-                    await _coresdkPlugin.launchMeetingCoreTemplateUi(
-                        "meeting_id", "meeting_password", "meeting_title");
-                  } on PlatformException {
-                    _meetingStatus = "error while joining";
-                  }
-                },
-                child: const Text('Join Meeting'),
-              ),
-            ],
-          ),
-        ),
-      ),
-    );
-  }
+   @override
+   Widget build(BuildContext context) {
+      return MaterialApp(
+         home: Scaffold(
+            appBar: AppBar(
+               title: const Text('Plugin example app'),
+            ),
+            body: Center(
+               child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.center,
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                     Text('meeting Status:  $_meetingStatus\n'),
+                     TextButton(
+                        onPressed: () async {
+                           try {
+                              await _coresdkPlugin.launchMeetingCoreTemplateUi(
+                                      "meeting_id", "meeting_password", "meeting_title");
+                           } on PlatformException {
+                              _meetingStatus = "error while joining";
+                           }
+                        },
+                        child: const Text('Join Meeting'),
+                     ),
+                  ],
+               ),
+            ),
+         ),
+      );
+   }
 }
 ```
 
