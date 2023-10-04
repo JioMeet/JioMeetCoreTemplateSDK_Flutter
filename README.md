@@ -50,7 +50,7 @@ You need to  add the necessary configurations to your   project's `pubspec.yaml`
   coresdk_plugin:
     git:
       url: https://github.com/JioMeet/JioMeetCoreTemplateSDK_Flutter.git
-      ref: 0.0.2
+      ref: 0.0.3
 ```
 
 #### Hilt:
@@ -162,7 +162,7 @@ final _jioCoreSdkPlugin = JioCoreSdkPlugin();
 #### Join Meeting :
 ```dart   
 try {
-await _coresdkPlugin.launchMeetingCoreTemplateUi("meeting_id", "meeting_password", "meeting_title");
+await _coresdkPlugin.launchMeetingCoreTemplateUi("meeting_id", "meeting_password", "meeting_title","pass bool value of isInitialAudioOn", "pass bool value of isInitialVideoOn");
 } on PlatformException {
 _meetingStatus = "error while joining";
 }

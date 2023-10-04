@@ -1,0 +1,5 @@
+
+enum NetWorkEnvironment {
+ prestage,
+  rc
+}

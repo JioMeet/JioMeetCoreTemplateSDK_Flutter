@@ -5,11 +5,13 @@ import android.content.Intent
 import android.os.Bundle
 import androidx.annotation.NonNull
 import com.google.gson.Gson
+import com.jiomeet.core.constant.Constant
 import io.flutter.embedding.engine.plugins.FlutterPlugin
 import io.flutter.plugin.common.MethodCall
 import io.flutter.plugin.common.MethodChannel
 import io.flutter.plugin.common.MethodChannel.MethodCallHandler
 import io.flutter.plugin.common.MethodChannel.Result
+import com.jiomeet.core.utils.BaseUrl
 
 
 /** JioCoreSdkPlugin */
@@ -37,9 +39,19 @@ class JioCoreSdkPlugin: FlutterPlugin, MethodCallHandler {
                 putString(Constants.MeetingDetails.MEETINGID, call.argument<String>("meetingId").toString())
                 putString(Constants.MeetingDetails.MEETINGPIN, call.argument<String>("meetingPin").toString())
                 putString(Constants.MeetingDetails.DISPLAYNAME, call.argument<String>("displayName").toString())
+                putBoolean(Constants.MeetingDetails.ISINITIALAUDIOON,call.argument<Boolean>("isInitialAudioOn")?: false )
+                putBoolean(Constants.MeetingDetails.ISINITIALVIDEOON,call.argument<Boolean>("isInitialVideoOn")?: false )
             }
           launchNativeActivity(bundle = bundle)
           result.success("")
+        }
+        Constants.MethodNames.SETENVIRONMENT -> {
+            val environment = when(call.argument<String>("environmentName").toString()) {
+                Constants.Environments.PRESTAGE -> Constant.Environment.PRESTAGE
+                Constants.Environments.RC  -> Constant.Environment.RC
+                else -> Constant.Environment.PROD
+            }
+         BaseUrl.initializedNetworkInformation(selectedEnvironment = environment)
         }
         else -> {
           result.notImplemented()

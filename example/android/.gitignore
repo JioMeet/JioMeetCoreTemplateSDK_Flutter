@@ -38,3 +38,4 @@ key.properties
 .idea/jarRepositories.xml
 .idea/navEditor.xml
 .idea/kotlinc.xml
+credentials.properties
