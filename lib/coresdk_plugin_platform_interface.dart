@@ -23,8 +23,13 @@ abstract class CoreSdkPluginPlatform extends PlatformInterface {
     _instance = instance;
   }
 
-  Future<void> launchMeetingCoreTemplateUi(String meetingId, String meetingPin, String name) {
-    throw UnimplementedError('launchMeetingCoreTemplateUi has not been implemented.');
+  Future<void> launchMeetingCoreTemplateUi(String meetingId, String meetingPin,
+      String name, bool isInitialAudioOn, bool isInitialVideoOn) {
+    throw UnimplementedError(
+        'launchMeetingCoreTemplateUi has not been implemented.');
   }
 
+  Future<void> setEnvironment(String environment) {
+    throw UnimplementedError('setEnvironment has not been implemented.');
+  }
 }

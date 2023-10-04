@@ -11,8 +11,29 @@ class MethodChannelCoreSdkPlugin extends CoreSdkPluginPlatform {
   final methodChannel = const MethodChannel('coresdk_plugin');
 
   @override
-  Future<String?> launchMeetingCoreTemplateUi(String meetingId, String meetingPin, String name) async {
-    return await methodChannel.invokeMethod<String>('launchMeetingCoreTemplateUi',MeetingDetails(meetingId: meetingId, meetingPin: meetingPin, displayName: name).toJson());
+  Future<String?> launchMeetingCoreTemplateUi(
+      String meetingId,
+      String meetingPin,
+      String name,
+      bool isInitialAudioOn,
+      bool isInitialVideoOn) async {
+    return await methodChannel.invokeMethod<String>(
+        'launchMeetingCoreTemplateUi',
+        MeetingDetails(
+                meetingId: meetingId,
+                meetingPin: meetingPin,
+                displayName: name,
+                isInitialAudioOn: isInitialAudioOn,
+                isInitialVideoOn: isInitialVideoOn)
+            .toJson());
   }
 
+  @override
+  Future<String?> setEnvironment(String environment) async {
+    final Map<String, dynamic> configParams = <String, dynamic>{
+      'environmentName': environment
+    };
+    return await methodChannel.invokeMethod<String>(
+        'setEnvironment', configParams);
+  }
 }

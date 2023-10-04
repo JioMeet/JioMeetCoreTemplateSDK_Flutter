@@ -1,5 +1,6 @@
 import 'dart:async';
 
+import 'package:coresdk_plugin/Environment.dart';
 import 'package:coresdk_plugin/coresdk_plugin.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
@@ -24,6 +25,7 @@ class _MyAppState extends State<MyApp> {
   void initState() {
     super.initState();
     coreSdkPluginCallbacks();
+    _coresdkPlugin.setEnvironment(NetWorkEnvironment.rc);
   }
 
   Future<void> coreSdkPluginCallbacks() async {
@@ -52,7 +54,7 @@ class _MyAppState extends State<MyApp> {
               TextButton(
                 onPressed: () async {
                   try {
-                    await _coresdkPlugin.launchMeetingCoreTemplateUi("meeting_id", "meeting_password", "meeting_name");
+                    await _coresdkPlugin.launchMeetingCoreTemplateUi("meeting_id", "meeting_password", "meeting_name", false, false);
                   } on PlatformException {
                     _meetingStatus = "error while joining";
                   }
