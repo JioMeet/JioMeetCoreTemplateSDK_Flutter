@@ -1,6 +1,6 @@
 name: coresdk_plugin
 description: In Flutter Plugin , you'll find a range of powerful features designed to enhance your application's communication and collaboration capabilities.
-version: 0.0.3
+version: 0.0.4
 homepage:
 
 environment:
