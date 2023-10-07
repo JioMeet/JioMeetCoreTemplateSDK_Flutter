@@ -1,6 +1,6 @@
 
 group 'jio.coresdk.coresdk_plugin'
-version '0.0.4'
+version '0.0.5'
 
 buildscript {
     ext {
@@ -77,5 +77,5 @@ dependencies {
     implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk8:1.8.10"
     api "com.google.dagger:hilt-android:$hiltVersion"
     kapt "com.google.dagger:hilt-android-compiler:$hiltVersion"
-    implementation 'com.jiomeet.platform:jiomeetcoretemplatesdk:2.3.1-SNAPSHOT-1'
+    implementation 'com.jiomeet.platform:jiomeetcoretemplatesdk:2.3.1-SNAPSHOT-2'
 }
