@@ -1,4 +1,5 @@
 import 'package:coresdk_plugin/meeting_details.dart';
+import 'package:coresdk_plugin/set_coresdk_config.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/services.dart';
 
@@ -36,4 +37,24 @@ class MethodChannelCoreSdkPlugin extends CoreSdkPluginPlatform {
     return await methodChannel.invokeMethod<String>(
         'setEnvironment', configParams);
   }
+
+  @override
+  Future<String?> setAuthParams(String token, String userId) async {
+    final Map<String, dynamic> configParams = <String, dynamic>{
+      'jwtToken': token,
+      'userId' : userId
+    };
+   return  await methodChannel.invokeMethod<String>(
+        'setAuthParams', configParams);
+  }
+
+  @override
+  Future<String?> setConfig(SetCoreSdkConfig config) async {
+    final Map<String, dynamic> configParams = <String, dynamic>{
+      'config': config.toJson(),
+    };
+     return await methodChannel.invokeMethod<String>(
+        'setCoreSdkConfig', configParams);
+  }
+
 }

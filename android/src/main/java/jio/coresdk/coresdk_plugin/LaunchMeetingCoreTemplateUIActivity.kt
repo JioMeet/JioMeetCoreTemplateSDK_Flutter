@@ -25,6 +25,7 @@ import org.jio.sdk.templates.core.model.CoreData
 class LaunchMeetingCoreTemplateUIActivity : ComponentActivity() {
     private val jioMeetConnectionListener = object : JioMeetConnectionListener {
         override fun onLeaveMeeting() {
+            JioCoreSdkPlugin.channel.invokeMethod("meetingEnded",  true)
              finish()
         }
 

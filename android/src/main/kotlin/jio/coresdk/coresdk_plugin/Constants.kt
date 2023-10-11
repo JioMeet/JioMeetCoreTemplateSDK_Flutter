@@ -12,6 +12,8 @@ class Constants {
     object MethodNames {
         const val LAUNCHMEETINGCORETEMPLATEUI = "launchMeetingCoreTemplateUi"
         const val SETENVIRONMENT = "setEnvironment"
+        const val SETCORESDKCONFIG = "setCoreSdkConfig"
+        const val SETAUTHPARAMS = "setAuthParams"
     }
 
     object Environments {
