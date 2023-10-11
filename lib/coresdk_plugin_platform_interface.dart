@@ -1,3 +1,4 @@
+import 'package:coresdk_plugin/set_coresdk_config.dart';
 import 'package:plugin_platform_interface/plugin_platform_interface.dart';
 
 import 'coresdk_plugin_method_channel.dart';
@@ -31,5 +32,13 @@ abstract class CoreSdkPluginPlatform extends PlatformInterface {
 
   Future<void> setEnvironment(String environment) {
     throw UnimplementedError('setEnvironment has not been implemented.');
+  }
+
+  Future<void> setAuthParams(String token, String userId) {
+    throw UnimplementedError('setAuthParams has not been implemented.');
+  }
+
+  Future<void> setConfig(SetCoreSdkConfig config) {
+    throw UnimplementedError('setConfig has not been implemented.');
   }
 }

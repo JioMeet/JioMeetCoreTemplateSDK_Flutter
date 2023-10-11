@@ -2,6 +2,7 @@ import 'dart:async';
 
 import 'package:coresdk_plugin/Environment.dart';
 import 'package:coresdk_plugin/coresdk_plugin.dart';
+import 'package:coresdk_plugin/set_coresdk_config.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 
@@ -36,6 +37,8 @@ class _MyAppState extends State<MyApp> {
         });
       }
     });
+    var config = SetCoreSdkConfig(enableFlipCamera: true);
+   await _coresdkPlugin.setConfig(config);
   }
 
   @override
