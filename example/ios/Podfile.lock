@@ -1,33 +1,28 @@
 PODS:
   - coresdk_plugin (0.0.1):
     - Flutter
-    - JioMeetUIKit_iOS
+    - JioMeetParticipantPanelSDK_iOS (= 2.5.2)
+    - JioMeetUIKit_iOS (= 2.5.2)
   - Flutter (1.0.0)
   - integration_test (0.0.1):
     - Flutter
-  - JioMeetChatUIKit_iOS (2.3.1):
-    - JioMeetCoreSDK_iOS (= 2.3.1)
-  - JioMeetCoreSDK_iOS (2.3.1):
+  - JioMeetCoreSDK_iOS (2.5.2):
     - JioMeetRtcEngine_iOS (= 3.7.1.2)
     - JioMeetRtmKit_iOS (= 1.5.1.0)
-  - JioMeetParticipantPanelSDK_iOS (2.3.1):
-    - JioMeetCoreSDK_iOS (= 2.3.1)
+  - JioMeetParticipantPanelSDK_iOS (2.5.2):
+    - JioMeetCoreSDK_iOS (= 2.5.2)
+    - JioMeetUIFoundation_iOS (= 2.5.2)
   - JioMeetRtcEngine_iOS (3.7.1.2):
     - JioMeetRtcEngine_iOS/Extensions (= 3.7.1.2)
     - JioMeetRtcEngine_iOS/RtcBasic (= 3.7.1.2)
   - JioMeetRtcEngine_iOS/Extensions (3.7.1.2)
   - JioMeetRtcEngine_iOS/RtcBasic (3.7.1.2)
   - JioMeetRtmKit_iOS (1.5.1.0)
-  - JioMeetUIFoundation_iOS (2.3.1)
-  - JioMeetUIKit_iOS (2.3.1):
-    - JioMeetChatUIKit_iOS (= 2.3.1)
-    - JioMeetCoreSDK_iOS (= 2.3.1)
-    - JioMeetParticipantPanelSDK_iOS (= 2.3.1)
-    - JioMeetUIFoundation_iOS (= 2.3.1)
-    - JioMeetVBGUIKit_iOS (= 2.3.1)
-  - JioMeetVBGUIKit_iOS (2.3.1):
-    - JioMeetCoreSDK_iOS (= 2.3.1)
-    - JioMeetUIFoundation_iOS (= 2.3.1)
+  - JioMeetUIFoundation_iOS (2.5.2):
+    - JioMeetCoreSDK_iOS (= 2.5.2)
+  - JioMeetUIKit_iOS (2.5.2):
+    - JioMeetCoreSDK_iOS (= 2.5.2)
+    - JioMeetUIFoundation_iOS (= 2.5.2)
 
 DEPENDENCIES:
   - coresdk_plugin (from `.symlinks/plugins/coresdk_plugin/ios`)
@@ -36,14 +31,12 @@ DEPENDENCIES:
 
 SPEC REPOS:
   trunk:
-    - JioMeetChatUIKit_iOS
     - JioMeetCoreSDK_iOS
     - JioMeetParticipantPanelSDK_iOS
     - JioMeetRtcEngine_iOS
     - JioMeetRtmKit_iOS
     - JioMeetUIFoundation_iOS
     - JioMeetUIKit_iOS
-    - JioMeetVBGUIKit_iOS
 
 EXTERNAL SOURCES:
   coresdk_plugin:
@@ -54,17 +47,15 @@ EXTERNAL SOURCES:
     :path: ".symlinks/plugins/integration_test/ios"
 
 SPEC CHECKSUMS:
-  coresdk_plugin: fd32c9de267d1b8826e33e7a3376540437b1e118
+  coresdk_plugin: 28ddbb7fa1a3f9684a145c232c7ef823de116293
   Flutter: f04841e97a9d0b0a8025694d0796dd46242b2854
   integration_test: 13825b8a9334a850581300559b8839134b124670
-  JioMeetChatUIKit_iOS: fd99069180a513984489da5686b8c8f7838630b0
-  JioMeetCoreSDK_iOS: 9f66efcee8928144695397d68d2e2b145c200fd2
-  JioMeetParticipantPanelSDK_iOS: 322a35b62ebc95d9872eff1949fa325213d750cd
+  JioMeetCoreSDK_iOS: a86ed6aaff940cc204dbda148a4b575abeabbeab
+  JioMeetParticipantPanelSDK_iOS: 0c4b8649c8e97cc15260e0407fedddf3b95d7b9b
   JioMeetRtcEngine_iOS: b26bd2991a55a1f87d96e425e677b5a757b67890
   JioMeetRtmKit_iOS: 587fbf9279a035023104dd8f170cb445ef4cd56e
-  JioMeetUIFoundation_iOS: 8565b49f6dfc17942bdcb6fa37de66e548624d52
-  JioMeetUIKit_iOS: e23c23fb3da56cff2063bf9f593cf4a710eb4d26
-  JioMeetVBGUIKit_iOS: be9a487c92d67962481a2117f9964a03de24c80e
+  JioMeetUIFoundation_iOS: ab7a04e8b6ae5add1fc72e13aaf7a5cbe2f19818
+  JioMeetUIKit_iOS: df2e8f44832266103a339ae8b6bf3e2668b7de14
 
 PODFILE CHECKSUM: 70d9d25280d0dd177a5f637cdb0f0b0b12c6a189
 

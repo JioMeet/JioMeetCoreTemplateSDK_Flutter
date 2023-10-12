@@ -11,11 +11,14 @@ import JioMeetCoreSDK
 import AVFoundation
 import Flutter
 class JMMeetingHandler: NSObject {
-    private var jioMeetView = JMMeetingView()
-    
+    private var jioMeetView: JMMeetingView!
+    private var environmentName = ""
+    private var jwToken = ""
+    private var userID = ""
     func showJioMeetView(data: [String: Any]) {
         DispatchQueue.main.async {
             if let topVC = UIApplication.getTopViewController() {
+                self.jioMeetView = JMMeetingView()
                 self.jioMeetView.translatesAutoresizingMaskIntoConstraints = false
                 topVC.view.addSubview(self.jioMeetView)
                 
@@ -38,7 +41,9 @@ class JMMeetingHandler: NSObject {
                     userRole: .speaker,
                     isInitialAudioOn: false,
                     isInitialVideoOn: false)
-                
+                self.jioMeetView.setParameters(params: [JMClientConstants.serverEnvironment.rawValue: self.environmentName])
+                self.jioMeetView.setParameters(params: ["jm_user_existing_id": self.userID, "jm_user_jwt_token": self.jwToken])
+
                 self.jioMeetView.joinMeeting(
                     meetingData: meetingData,
                     config: meetingCongfig,
@@ -46,7 +51,65 @@ class JMMeetingHandler: NSObject {
             }
         }
     }
+
+    func setEnvironment(data: [String: Any]) {
+        guard let enviroment = data["environmentName"] as? String else { return }
+        self.environmentName = enviroment
+    }
     
+    func enableRequiredFeaturesFromConfig(data: [String: Any]) {
+        guard let config = data["config"] as? [String: Any] else { return }
+        if let enableFlipCamera = config["enableFlipCamera"] as? Bool {
+            JMUIKit.enableFlipCamera = enableFlipCamera
+        }
+        if let isAudioOnlyModeEnabled = config["isAudioOnlyModeEnabled"] as? Bool {
+            JMUIKit.isAudioOnlyModeFeatureEnabled = isAudioOnlyModeEnabled
+        }
+        if let isChatEnabled = config["isChatEnabled"] as? Bool {
+            JMUIKit.isChatViewEnabled = isChatEnabled
+        }
+        if let isMoreFeaturesEnabled = config["isMoreFeaturesEnabled"] as? Bool {
+            JMUIKit.isMoreFeaturesEnabled = isMoreFeaturesEnabled
+        }
+        if let isParticipantPanelEnabled = config["isParticipantPanelEnabled"] as? Bool {
+            JMUIKit.isParticipantPanelEnabled = isParticipantPanelEnabled
+        }
+        if let isRecordingEnabled = config["isRecordingEnabled"] as? Bool {
+            JMUIKit.isRecordingEnabled = isRecordingEnabled
+        }
+        if let isShareEnabled = config["isShareEnabled"] as? Bool {
+            JMUIKit.isScreenShareEnabled = isShareEnabled
+            JMUIKit.isWhiteboardEnabled = isShareEnabled
+        }
+        if let isVirtualBackgroundEnabled = config["isVirtualBackgroundEnabled"] as? Bool {
+            JMUIKit.isVirtualBackgroundEnabled = isVirtualBackgroundEnabled
+        }
+        if let showAudioOptions = config["showAudioOptions"] as? Bool {
+            JMUIKit.showAudioOptions = showAudioOptions
+        }
+        if let showConnectionStateIndicator = config["showConnectionStateIndicator"] as? Bool {
+            JMUIKit.showConnectionStateIndicator = showConnectionStateIndicator
+        }
+        if let showMeetingInfo = config["showMeetingInfo"] as? Bool {
+            JMUIKit.showMeetingInfo = showMeetingInfo
+        }
+        if let showMeetingTimer = config["showMeetingTimer"] as? Bool {
+            JMUIKit.showMeetingTimer = showMeetingTimer
+        }
+        if let showMeetingTitle = config["showMeetingTitle"] as? Bool {
+            JMUIKit.showMeetingTitle = showMeetingTitle
+        }
+    }
+    
+    func setUserLogin(data: [String: Any]) {
+        if let token = data["jwtToken"] as? String {
+            jwToken = token
+        }
+        if let userId = data["userId"] as? String {
+            userID = userId
+        }
+    }
+
     func removeJioMeetView(){
         DispatchQueue.main.async {
             self.jioMeetView.removeFromSuperview()
@@ -56,8 +119,7 @@ class JMMeetingHandler: NSObject {
     private func showMeetingJoinError(message: String) {
         guard let topVc = UIApplication.getTopViewController() else { return }
         let errorAlertController = UIAlertController(title: "Error", message: message, preferredStyle: .alert)
-        let okAction = UIAlertAction(title: "Ok", style: .default) {[weak self] _ in
-        }
+        let okAction = UIAlertAction(title: "Ok", style: .default) {_ in }
         errorAlertController.addAction(okAction)
         topVc.present(errorAlertController, animated: true)
     }
