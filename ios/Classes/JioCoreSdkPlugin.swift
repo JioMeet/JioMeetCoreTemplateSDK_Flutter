@@ -10,16 +10,18 @@ public class JioCoreSdkPlugin: NSObject, FlutterPlugin {
         instance.jmMeetigHandler.micCameraPermissons()
         registrar.addMethodCallDelegate(instance, channel: channel)
     }
-        
+    
     public func handle(_ call: FlutterMethodCall, result: @escaping FlutterResult) {
+        let arguments: [String: Any] = call.arguments as? [String : Any] ?? [:]
         switch call.method {
         case "launchMeetingCoreTemplateUi":
-            if call.arguments is [String: Any] {
-                let arguments: [String: Any] = call.arguments as! [String : Any]
-                loadTemplateSDK(data: arguments)
-                result("Success")
-            }
-            result("Success")
+            loadTemplateSDK(data: arguments)
+        case "setEnvironment":
+            setEnvironment(data: arguments)
+        case "setCoreSdkConfig":
+            setConfigValues(data: arguments)
+        case "setAuthParams":
+            setUserLogin(data: arguments)
         default:
             result(FlutterMethodNotImplemented)
         }
@@ -27,6 +29,18 @@ public class JioCoreSdkPlugin: NSObject, FlutterPlugin {
     
     private func loadTemplateSDK(data: [String: Any]) {
         jmMeetigHandler.showJioMeetView(data: data)
+    }
+    
+    private func setEnvironment(data: [String: Any]) {
+        jmMeetigHandler.setEnvironment(data: data)
+    }
+    
+    private func setConfigValues(data: [String: Any]) {
+        jmMeetigHandler.enableRequiredFeaturesFromConfig(data: data)
+    }
+    
+    private func setUserLogin(data: [String: Any]) {
+        jmMeetigHandler.setUserLogin(data: data)
     }
 }
 
