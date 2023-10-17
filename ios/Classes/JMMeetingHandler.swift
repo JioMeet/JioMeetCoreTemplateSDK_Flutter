@@ -54,8 +54,13 @@ class JMMeetingHandler: NSObject {
 
     func setEnvironment(data: [String: Any]) {
         guard let enviroment = data["environmentName"] as? String else { return }
-        self.environmentName = enviroment
+        if enviroment == "prestage" {
+          self.environmentName = "preStage"
+        } else {
+            self.environmentName =  enviroment
+        }
     }
+
     
     func enableRequiredFeaturesFromConfig(data: [String: Any]) {
         guard let config = data["config"] as? [String: Any] else { return }
