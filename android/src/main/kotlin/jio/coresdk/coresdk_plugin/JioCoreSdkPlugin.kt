@@ -62,6 +62,7 @@ class JioCoreSdkPlugin : FlutterPlugin, MethodCallHandler {
                 val environment = when (call.argument<String>("environmentName").toString()) {
                     Constants.Environments.PRESTAGE -> Constant.Environment.PRESTAGE
                     Constants.Environments.RC -> Constant.Environment.RC
+                    Constants.Environments.VirginGroups -> Constant.Environment.VirginGroups
                     else -> Constant.Environment.PROD
                 }
                 BaseUrl.initializedNetworkInformation(selectedEnvironment = environment)
