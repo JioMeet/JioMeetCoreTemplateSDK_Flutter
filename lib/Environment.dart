@@ -1,5 +1,5 @@
-
 enum NetWorkEnvironment {
- prestage,
-  rc
+  prestage,
+  rc,
+  virginGroups,
 }

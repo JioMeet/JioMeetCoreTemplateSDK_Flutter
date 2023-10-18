@@ -19,5 +19,6 @@ class Constants {
     object Environments {
         const val RC = "rc"
         const val PRESTAGE = "prestage"
+        const val VirginGroups = "virginGroups"
     }
 }
