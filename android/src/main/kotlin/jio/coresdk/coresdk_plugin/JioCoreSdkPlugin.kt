@@ -76,7 +76,7 @@ class JioCoreSdkPlugin : FlutterPlugin, MethodCallHandler {
                         enableFlipCamera = it.enableFlipCamera
                         isChatEnabled = it.isChatEnabled
                         isMoreFeaturesEnabled = it.isMoreFeaturesEnabled
-                        isMoreFeaturesEnabled = it.isParticipantPanelEnabled
+                        isParticipantPanelEnabled = it.isParticipantPanelEnabled
                     }
                     JioMeetCoreTemplateUiConfig.FeatureManager.MoreOptions.apply {
                         isAudioOnlyModeEnabled = it.isAudioOnlyModeEnabled
