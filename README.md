@@ -50,7 +50,7 @@ You need to  add the necessary configurations to your   project's `pubspec.yaml`
   coresdk_plugin:
     git:
       url: https://github.com/JioMeet/JioMeetCoreTemplateSDK_Flutter.git
-      ref: 0.0.7
+      ref: 0.0.11
 ```
 
 #### Hilt:
@@ -193,6 +193,12 @@ static const platform = MethodChannel('coresdk_plugin');
     });
   }
 ```
+#### config features, like we have to enable/disable the feature of switch camera, screen share, participant panel
+we can find all feature flags in SetCoreSdkConfig class.
+`````dart
+   var config = SetCoreSdkConfig(enableFlipCamera: true);
+   await _coresdkPlugin.setConfig(config);
+`````
 
 ### Example
 ```dart

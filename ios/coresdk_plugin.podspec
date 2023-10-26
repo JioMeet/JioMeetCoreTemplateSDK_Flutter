@@ -4,7 +4,7 @@
 #
 Pod::Spec.new do |s|
   s.name             = 'coresdk_plugin'
-  s.version          = '0.0.1'
+  s.version          = '0.0.11'
   s.summary          = 'A new Flutter plugin project.'
   s.description      = <<-DESC
 A new Flutter plugin project.
@@ -15,8 +15,8 @@ A new Flutter plugin project.
   s.source           = { :path => '.' }
   s.source_files = 'Classes/**/*'
   s.dependency 'Flutter'
-  s.dependency 'JioMeetUIKit_iOS', '~>2.5'
-  s.dependency 'JioMeetParticipantPanelSDK_iOS', '~>2.5'
+  s.dependency 'JioMeetUIKit_iOS', '2.6.3'
+  s.dependency 'JioMeetParticipantPanelSDK_iOS', '2.6.3'
   s.platform = :ios, '11.0'
 
   # Flutter.framework does not contain a i386 slice.
