@@ -54,13 +54,8 @@ class JMMeetingHandler: NSObject {
 
     func setEnvironment(data: [String: Any]) {
         guard let enviroment = data["environmentName"] as? String else { return }
-        if enviroment == "prestage" {
-          self.environmentName = "preStage"
-        } else {
-            self.environmentName =  enviroment
-        }
+        self.environmentName =  enviroment
     }
-
     
     func enableRequiredFeaturesFromConfig(data: [String: Any]) {
         guard let config = data["config"] as? [String: Any] else { return }
@@ -104,6 +99,7 @@ class JMMeetingHandler: NSObject {
         if let showMeetingTitle = config["showMeetingTitle"] as? Bool {
             JMUIKit.showMeetingTitle = showMeetingTitle
         }
+        JMUIKit.showThankYouScreen = false
     }
     
     func setUserLogin(data: [String: Any]) {
