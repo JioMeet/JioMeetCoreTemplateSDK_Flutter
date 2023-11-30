@@ -5,6 +5,7 @@
     <application
         android:icon="@mipmap/ic_launcher"
         android:name=".MainApplication"
+        tools:replace="android:name"
         android:label="coresdk_plugin_example">
         <activity
             android:name=".MainActivity"
