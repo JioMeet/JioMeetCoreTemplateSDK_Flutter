@@ -65,7 +65,7 @@ class JioCoreSdkPlugin : FlutterPlugin, MethodCallHandler {
                     Constants.Environments.VirginGroups -> Constant.Environment.VirginGroups
                     else -> Constant.Environment.PROD
                 }
-                BaseUrl.initializedNetworkInformation(selectedEnvironment = environment)
+                BaseUrl.initializedNetworkInformation(context, selectedEnvironment = environment)
             }
 
             Constants.MethodNames.SETCORESDKCONFIG -> {
