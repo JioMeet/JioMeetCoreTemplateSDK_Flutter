@@ -1,0 +1,103 @@
+PODS:
+  - coresdk_plugin (0.0.16):
+    - Flutter
+    - JioMeetChatUIKit_iOS (= 4.0.7)
+    - JioMeetParticipantPanelSDK_iOS (= 4.0.7)
+    - JioMeetReactions_iOS (= 4.0.7)
+    - JioMeetUIKit_iOS (= 4.0.7)
+    - JioMeetVBGUIKit_iOS (= 4.0.7)
+  - Flutter (1.0.0)
+  - integration_test (0.0.1):
+    - Flutter
+  - JioMeetChatUIKit_iOS (4.0.7):
+    - JioMeetCoreSDK_iOS (= 4.0.7)
+    - JioMeetUIFoundation_iOS (= 4.0.7)
+  - JioMeetCoreSDK_iOS (4.0.7):
+    - JMMediaStackSDK_iOS (= 1.0.8-alpha.10)
+  - JioMeetParticipantPanelSDK_iOS (4.0.7):
+    - JioMeetCoreSDK_iOS (= 4.0.7)
+    - JioMeetUIFoundation_iOS (= 4.0.7)
+  - JioMeetReactions_iOS (4.0.7):
+    - JioMeetCoreSDK_iOS (= 4.0.7)
+    - JioMeetUIFoundation_iOS (= 4.0.7)
+    - lottie-ios (~> 4.3)
+  - JioMeetUIFoundation_iOS (4.0.7):
+    - JioMeetCoreSDK_iOS (= 4.0.7)
+  - JioMeetUIKit_iOS (4.0.7):
+    - JioMeetCoreSDK_iOS (= 4.0.7)
+    - JioMeetUIFoundation_iOS (= 4.0.7)
+  - JioMeetVBGUIKit_iOS (4.0.7):
+    - JioMeetCoreSDK_iOS (= 4.0.7)
+    - JioMeetUIFoundation_iOS (= 4.0.7)
+  - JMMediaStackSDK_iOS (1.0.8-alpha.10):
+    - JMMediaWebRtc_iOS (= 1.0.0)
+    - JMMMWormhole (~> 3.0.0)
+    - JMWebRtcVad (~> 3.0.0)
+    - Socket.IO-Client-Swift (~> 16.1.0)
+    - Starscream (~> 4.0.6)
+    - SwiftyJSON
+  - JMMediaWebRtc_iOS (1.0.0)
+  - JMMMWormhole (3.0.2):
+    - JMMMWormhole/Core (= 3.0.2)
+  - JMMMWormhole/Core (3.0.2)
+  - JMWebRtcVad (3.0.0)
+  - lottie-ios (4.5.0)
+  - Socket.IO-Client-Swift (16.1.1):
+    - Starscream (~> 4.0.8)
+  - Starscream (4.0.8)
+  - SwiftyJSON (5.0.2)
+
+DEPENDENCIES:
+  - coresdk_plugin (from `.symlinks/plugins/coresdk_plugin/ios`)
+  - Flutter (from `Flutter`)
+  - integration_test (from `.symlinks/plugins/integration_test/ios`)
+
+SPEC REPOS:
+  trunk:
+    - JioMeetChatUIKit_iOS
+    - JioMeetCoreSDK_iOS
+    - JioMeetParticipantPanelSDK_iOS
+    - JioMeetReactions_iOS
+    - JioMeetUIFoundation_iOS
+    - JioMeetUIKit_iOS
+    - JioMeetVBGUIKit_iOS
+    - JMMediaStackSDK_iOS
+    - JMMediaWebRtc_iOS
+    - JMMMWormhole
+    - JMWebRtcVad
+    - lottie-ios
+    - Socket.IO-Client-Swift
+    - Starscream
+    - SwiftyJSON
+
+EXTERNAL SOURCES:
+  coresdk_plugin:
+    :path: ".symlinks/plugins/coresdk_plugin/ios"
+  Flutter:
+    :path: Flutter
+  integration_test:
+    :path: ".symlinks/plugins/integration_test/ios"
+
+SPEC CHECKSUMS:
+  coresdk_plugin: 15bcf0bfafd2d4593d6f8f6ac9972b4fd79b97cc
+  Flutter: e0871f40cf51350855a761d2e70bf5af5b9b5de7
+  integration_test: 252f60fa39af5e17c3aa9899d35d908a0721b573
+  JioMeetChatUIKit_iOS: 3ce8d9598f349fbe311c3f44a2f4d1297474d49e
+  JioMeetCoreSDK_iOS: 726a244930880ef645af62f790fb0cea7479ac65
+  JioMeetParticipantPanelSDK_iOS: 0df24066c63a88c0a77d8ba859a6b9fa6552117b
+  JioMeetReactions_iOS: 86065bf3fb53c9dc5f10aa69133d8e8ab47c3fbb
+  JioMeetUIFoundation_iOS: da04a222383e66e261b1a3b5a830f34889f67ffb
+  JioMeetUIKit_iOS: 15a2914c0dc293f94cc1812b9577ffed74f94cde
+  JioMeetVBGUIKit_iOS: 18091892afb1c0974497dee4cd470692a94dbb4e
+  JMMediaStackSDK_iOS: 3c5fd93b159d5ad21c2e261fea36843edfd18620
+  JMMediaWebRtc_iOS: 48ef2f41b17ca0d7eb7943c9cdc2cf4e32569855
+  JMMMWormhole: 5f606b08c3e68c95c8d1e039b98f71f57b1e938a
+  JMWebRtcVad: 8753e4a9ce5b48e089c4077c05ce089d7daa63be
+  lottie-ios: a881093fab623c467d3bce374367755c272bdd59
+  Socket.IO-Client-Swift: 3614bea82ba005df1c2ff01154f4004993e05ad7
+  Starscream: 19b5533ddb925208db698f0ac508a100b884a1b9
+  SwiftyJSON: f5b1bf1cd8dd53cd25887ac0eabcfd92301c6a5a
+
+PODFILE CHECKSUM: 403be6c23719734f6942f6ce489ce18d57e1aba5
+
+COCOAPODS: 1.16.2

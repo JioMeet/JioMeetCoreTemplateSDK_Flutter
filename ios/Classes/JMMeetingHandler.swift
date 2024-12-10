@@ -99,6 +99,9 @@ class JMMeetingHandler: NSObject {
         if let showMeetingTitle = config["showMeetingTitle"] as? Bool {
             JMUIKit.showMeetingTitle = showMeetingTitle
         }
+        if let isReactionsEnabled = config["isReactionsEnabled"] as? Bool {
+            JMUIKit.isReactionsEnabled = isReactionsEnabled
+        }
         JMUIKit.showThankYouScreen = false
     }
     

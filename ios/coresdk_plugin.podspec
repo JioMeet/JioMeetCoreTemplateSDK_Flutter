@@ -15,8 +15,11 @@ A new Flutter plugin project.
   s.source           = { :path => '.' }
   s.source_files = 'Classes/**/*'
   s.dependency 'Flutter'
-  s.dependency 'JioMeetUIKit_iOS', '2.6.3'
-  s.dependency 'JioMeetParticipantPanelSDK_iOS', '2.6.3'
+  s.dependency 'JioMeetUIKit_iOS', '4.0.7'
+  s.dependency 'JioMeetParticipantPanelSDK_iOS', '4.0.7'
+  s.dependency 'JioMeetChatUIKit_iOS', '4.0.7'
+  s.dependency 'JioMeetVBGUIKit_iOS', '4.0.7'
+  s.dependency 'JioMeetReactions_iOS', '4.0.7'
   s.platform = :ios, '11.0'
 
   # Flutter.framework does not contain a i386 slice.

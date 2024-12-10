@@ -26,7 +26,7 @@ class _MyAppState extends State<MyApp> {
   void initState() {
     super.initState();
     coreSdkPluginCallbacks();
-    _coresdkPlugin.setEnvironment(NetWorkEnvironment.rc);
+    _coresdkPlugin.setEnvironment(NetWorkEnvironment.production);
   }
 
   Future<void> coreSdkPluginCallbacks() async {
@@ -57,7 +57,7 @@ class _MyAppState extends State<MyApp> {
               TextButton(
                 onPressed: () async {
                   try {
-                  await _coresdkPlugin.launchMeetingCoreTemplateUi("meeting_id", "meeting_password", "meeting_name", false, false);
+                  await _coresdkPlugin.launchMeetingCoreTemplateUi("5411558715", "JDem9", "Mani", false, false);
                   } on PlatformException {
                     _meetingStatus = "error while joining";
                   }
