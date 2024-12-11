@@ -41,12 +41,21 @@
     <uses-permission android:name="android.permission.EXPAND_STATUS_BAR" />
     <uses-permission android:name="android.permission.FOREGROUND_SERVICE" />
     <uses-permission android:name="android.permission.DOWNLOAD_WITHOUT_NOTIFICATION" />
+
     <application>
         <activity
             android:theme="@style/Theme.AppCompat"
             android:name=".LaunchMeetingCoreTemplateUIActivity"
             android:exported="false"
             android:screenOrientation="portrait"/>
+        <service
+            android:name="org.jio.sdk.service.OnGoingScreenShareService"
+            android:foregroundServiceType="mediaProjection"
+            android:stopWithTask="false" />
+
     </application>
+
+
+
 
 </manifest>

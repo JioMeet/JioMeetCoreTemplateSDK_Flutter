@@ -12,6 +12,7 @@ class SetCoreSdkConfig {
   bool showAudioOptions = false;
   bool showMeetingInfo = false;
   bool showMeetingTimer = false;
+  bool isReactionEnabled = false;
 
   SetCoreSdkConfig(
       {required this.enableFlipCamera,
@@ -26,7 +27,8 @@ class SetCoreSdkConfig {
       this.showConnectionStateIndicator = false,
       this.showAudioOptions = false,
       this.showMeetingInfo = false,
-      this.showMeetingTimer = false});
+      this.showMeetingTimer = false,
+      this.isReactionEnabled = false});
 
   Map<String, dynamic> toJson() {
     return {
@@ -42,7 +44,8 @@ class SetCoreSdkConfig {
       'showConnectionStateIndicator': showConnectionStateIndicator,
       'showAudioOptions': showAudioOptions,
       'showMeetingInfo': showMeetingInfo,
-      'showMeetingTimer': showMeetingTimer
+      'showMeetingTimer': showMeetingTimer,
+      'isReactionEnabled': isReactionEnabled
     };
   }
 }

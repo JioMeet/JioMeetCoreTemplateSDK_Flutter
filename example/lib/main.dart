@@ -2,6 +2,7 @@ import 'dart:async';
 
 import 'package:coresdk_plugin/Environment.dart';
 import 'package:coresdk_plugin/coresdk_plugin.dart';
+import 'package:coresdk_plugin/meeting_details.dart';
 import 'package:coresdk_plugin/set_coresdk_config.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
@@ -26,7 +27,7 @@ class _MyAppState extends State<MyApp> {
   void initState() {
     super.initState();
     coreSdkPluginCallbacks();
-    _coresdkPlugin.setEnvironment(NetWorkEnvironment.rc);
+    _coresdkPlugin.setEnvironment(NetWorkEnvironment.prod);
   }
 
   Future<void> coreSdkPluginCallbacks() async {
@@ -57,7 +58,8 @@ class _MyAppState extends State<MyApp> {
               TextButton(
                 onPressed: () async {
                   try {
-                  await _coresdkPlugin.launchMeetingCoreTemplateUi("meeting_id", "meeting_password", "meeting_name", false, false);
+                  var meetingDetails = MeetingDetails(meetingId: "meeting_id", meetingPin: "meeting_pin", displayName: "display_name", isInitialAudioOn: false, isInitialVideoOn: false);
+                  await _coresdkPlugin.launchMeetingCoreTemplateUi(meetingDetails);
                   } on PlatformException {
                     _meetingStatus = "error while joining";
                   }

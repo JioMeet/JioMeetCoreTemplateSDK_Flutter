@@ -2,15 +2,19 @@ class MeetingDetails {
   String meetingId;
   String meetingPin;
   String displayName;
-  bool isInitialAudioOn = false;
-  bool isInitialVideoOn = false;
+  bool isInitialAudioOn;
+  bool isInitialVideoOn;
+  String? hostToken;
 
   MeetingDetails(
       {required this.meetingId,
       required this.meetingPin,
       required this.displayName,
-      required this.isInitialAudioOn,
-      required this.isInitialVideoOn});
+      this.isInitialAudioOn = false,
+      this.isInitialVideoOn = false,
+      this.hostToken,
+      
+      });
 
   Map<String, dynamic> toJson() {
     return {
@@ -18,7 +22,8 @@ class MeetingDetails {
       'meetingPin': meetingPin,
       'displayName': displayName,
       'isInitialAudioOn': isInitialAudioOn,
-      'isInitialVideoOn': isInitialVideoOn
+      'isInitialVideoOn': isInitialVideoOn,
+      'hostToken': hostToken,
     };
   }
 }

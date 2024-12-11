@@ -1,13 +1,13 @@
 
 import 'package:coresdk_plugin/Environment.dart';
 import 'package:coresdk_plugin/set_coresdk_config.dart';
-
+import 'package:coresdk_plugin/meeting_details.dart';
 import 'coresdk_plugin_platform_interface.dart';
 
 class JioCoreSdkPlugin {
 
-  Future<void> launchMeetingCoreTemplateUi(String meetingId, String meetingPin, String name, bool isInitialAudioOn, bool isInitialVideoOn) {
-    return CoreSdkPluginPlatform.instance.launchMeetingCoreTemplateUi(meetingId, meetingPin, name, isInitialAudioOn, isInitialVideoOn);
+  Future<void> launchMeetingCoreTemplateUi(MeetingDetails meeting_details) {
+    return CoreSdkPluginPlatform.instance.launchMeetingCoreTemplateUi(meeting_details);
   }
 
   Future<void> setEnvironment(NetWorkEnvironment environment) {
