@@ -168,6 +168,7 @@ we can find all feature flags in SetCoreSdkConfig class.
 import 'dart:async';
 
 import 'package:coresdk_plugin/coresdk_plugin.dart';
+import 'package:coresdk_plugin/meeting_details.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 
