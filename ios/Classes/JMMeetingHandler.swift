@@ -16,6 +16,7 @@ class JMMeetingHandler: NSObject {
     private var jwToken = ""
     private var userID = ""
     func showJioMeetView(data: [String: Any]) {
+        guard let meeting_details = data["meeting_details"] as? [String: Any] else { return }
         DispatchQueue.main.async {
             if let topVC = UIApplication.getTopViewController() {
                 self.jioMeetView = JMMeetingView()
@@ -29,18 +30,21 @@ class JMMeetingHandler: NSObject {
                     self.jioMeetView.bottomAnchor.constraint(equalTo: topVC.view.bottomAnchor),
                 ])
                 
-                let meetingID = data["meetingId"] as? String ?? ""
-                let meetingPin = data["meetingPin"] as? String ?? ""
-                let name = data["displayName"] as? String ?? ""
+                let meetingID = meeting_details["meetingId"] as? String ?? ""
+                let meetingPin = meeting_details["meetingPin"] as? String ?? ""
+                let name = meeting_details["displayName"] as? String ?? ""
+                let isInitialAudioOn = meeting_details["isInitialAudioOn"] as? Bool ?? false
+                let isInitialVideoOn = meeting_details["isInitialVideoOn"] as? Bool ?? false
+                let hostToken = meeting_details["hostToken"] as? String ?? ""
                 let meetingData = JMJoinMeetingData(
                     meetingId: meetingID ,
                     meetingPin: meetingPin,
                     displayName: name)
                 
                 let meetingCongfig = JMJoinMeetingConfig(
-                    userRole: .speaker,
-                    isInitialAudioOn: false,
-                    isInitialVideoOn: false)
+                    userRole: hostToken.isEmpty ? .speaker : .host(hostToken: hostToken),
+                    isInitialAudioOn: isInitialAudioOn,
+                    isInitialVideoOn: isInitialVideoOn)
                 self.jioMeetView.setParameters(params: [JMClientConstants.serverEnvironment.rawValue: self.environmentName])
                 self.jioMeetView.setParameters(params: ["jm_user_existing_id": self.userID, "jm_user_jwt_token": self.jwToken])
 
@@ -54,7 +58,11 @@ class JMMeetingHandler: NSObject {
 
     func setEnvironment(data: [String: Any]) {
         guard let enviroment = data["environmentName"] as? String else { return }
-        self.environmentName =  enviroment
+        if  enviroment == "prod" {
+            self.environmentName = "production"
+        } else {
+            self.environmentName =  enviroment
+        }
     }
     
     func enableRequiredFeaturesFromConfig(data: [String: Any]) {
@@ -98,6 +106,9 @@ class JMMeetingHandler: NSObject {
         }
         if let showMeetingTitle = config["showMeetingTitle"] as? Bool {
             JMUIKit.showMeetingTitle = showMeetingTitle
+        }
+        if let reactionEnable = config["isReactionEnabled"] as? Bool {
+            JMUIKit.isReactionsEnabled = reactionEnable
         }
         JMUIKit.showThankYouScreen = false
     }

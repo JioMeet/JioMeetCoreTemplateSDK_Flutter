@@ -2,6 +2,7 @@ import 'package:coresdk_plugin/set_coresdk_config.dart';
 import 'package:plugin_platform_interface/plugin_platform_interface.dart';
 
 import 'coresdk_plugin_method_channel.dart';
+import 'meeting_details.dart';
 
 abstract class CoreSdkPluginPlatform extends PlatformInterface {
   /// Constructs a CoresdkPluginPlatform.
@@ -24,8 +25,7 @@ abstract class CoreSdkPluginPlatform extends PlatformInterface {
     _instance = instance;
   }
 
-  Future<void> launchMeetingCoreTemplateUi(String meetingId, String meetingPin,
-      String name, bool isInitialAudioOn, bool isInitialVideoOn) {
+  Future<void> launchMeetingCoreTemplateUi(MeetingDetails meeting_details) {
     throw UnimplementedError(
         'launchMeetingCoreTemplateUi has not been implemented.');
   }

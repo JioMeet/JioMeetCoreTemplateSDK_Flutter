@@ -1,11 +1,10 @@
 
 group 'jio.coresdk.coresdk_plugin'
-version '0.0.16'
+version '0.0.17'
 
 buildscript {
     ext {
         kotlin_version = '1.7.20'
-        hiltVersion = "2.44"
     }
     repositories {
         google()
@@ -15,20 +14,29 @@ buildscript {
     dependencies {
         classpath 'com.android.tools.build:gradle:7.3.0'
         classpath "org.jetbrains.kotlin:kotlin-gradle-plugin:$kotlin_version"
-        classpath "com.google.dagger:hilt-android-gradle-plugin:$hiltVersion"
     }
 }
 
-def credentialsProperties = new Properties()
-def credentialsPropertiesFile = rootProject.file('credentials.properties')
-if (credentialsPropertiesFile.exists()) {
-    credentialsProperties.load(new FileInputStream(credentialsPropertiesFile))
+def properties = new Properties()
+def rootPropertiesFile = file("${rootDir}/../../credentials.properties")
+
+if (rootPropertiesFile.exists()) {
+    System.out.println("Exists")
+    rootPropertiesFile.withInputStream { stream ->
+    properties.load(stream)
+  }
+}
+
+def githubUsername = properties['username'] ?: ''
+def githubPassword = properties['password'] ?: ''
+
+if (!githubUsername || !githubPassword) {
+  throw new GradleException("GitHub credentials not found. Please ensure `credentials.properties` exists at the project root.")
 }
 
 apply plugin: 'com.android.library'
 apply plugin: 'kotlin-android'
 apply plugin: 'kotlin-kapt'
-apply plugin: 'com.google.dagger.hilt.android'
 
 android {
     compileSdkVersion 31
@@ -61,8 +69,8 @@ rootProject.allprojects {
     repositories {
         maven {
             credentials {
-                username credentialsProperties['username']
-                password credentialsProperties['password']
+                username githubUsername
+                password githubPassword
             }
             url = uri("https://maven.pkg.github.com/JioMeet/JioMeetCoreTemplateSDK_ANDROID")
         }
@@ -75,7 +83,5 @@ dependencies {
     implementation 'androidx.appcompat:appcompat:1.6.1'
     implementation 'androidx.constraintlayout:constraintlayout:2.1.4'
     implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk8:1.8.10"
-    api "com.google.dagger:hilt-android:$hiltVersion"
-    kapt "com.google.dagger:hilt-android-compiler:$hiltVersion"
-    implementation 'com.jiomeet.platform:jiomeetcoretemplatesdk:3.0.1-virgin-groups'
+    implementation 'com.jiomeet.platform:jiomeetcoretemplatesdk:4.1.1'
 }

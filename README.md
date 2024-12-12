@@ -6,7 +6,7 @@
 3. [Prerequisites](#prerequisites)
    - [Android](#android)
       - [Add Plugin](#add-plugin)
-      - [Hilt](#hilt)
+      - [Authentication](#authentication)
    - [iOS](#ios)
       - [Require Configurations](#require-configurations)
       - [Info.plist Changes](#infoplist-changes)
@@ -29,12 +29,11 @@ In Flutter Plugin , you'll find a range of powerful features designed to enhance
 
 2. **Participant Panel**: Manage and monitor participants in real-time meetings or video calls for a seamless user experience.
 
-3. **Virtual Background**: Customize the background of your video calls, adding a touch of professionalism or fun to your communication.
+3. **Screen Sharing and Whiteboard Sharing**: Empower collaboration by sharing your screen or using a virtual whiteboard during meetings or video conferences.
 
-4. **Screen Sharing and Whiteboard Sharing**: Empower collaboration by sharing your screen or using a virtual whiteboard during meetings or video conferences.
+4. **Group Conversation**: Easily engage in text-based conversations with multiple participants in one chat group.
 
-5. **Group Conversation**: Easily engage in text-based conversations with multiple participants in one chat group.
-6. **Inspect Call Health**: Monitor the quality and performance of your audio and video calls to ensure a seamless communication experience.
+5. **Inspect Call Health**: Monitor the quality and performance of your audio and video calls to ensure a seamless communication experience.
 
 
 ## Prerequisites
@@ -44,73 +43,36 @@ Before you begin, ensure you have met the following requirements:
 ### Android:
 #### Add plugin:
 
-You need to  add the necessary configurations to your   project's `pubspec.yaml` file:
+1. You need to  add the necessary configurations to your   project's `pubspec.yaml` file:
 
 ```yaml
   coresdk_plugin:
     git:
       url: https://github.com/JioMeet/JioMeetCoreTemplateSDK_Flutter.git
-      ref: 0.0.16
+      ref: 0.0.17
 ```
+#### Authentication
+2. Add `credentials.properties` File to Your Project Root
 
-#### Hilt:
+To securely add your GitHub credentials, follow these steps to create a `credentials.properties` file in the root directory of your project:
 
-To set up Hilt in your flutter project, follow these steps:
+### Step 1: Generate a Personal Access Token for GitHub
 
-1. First, add the hilt-android-gradle-plugin plugin to your project’s root build.gradle file (**android/build.gradle**)
+1. Go to **Settings** > **Developer Settings** > **Personal Access Tokens** > **Tokens (classic)** > **Generate new token**.
+2. Select the following scope:
+   - `read:packages`
+3. Generate the token and **copy it immediately**. You cannot view the token again once you leave the page. If lost, you will need to generate a new one.
 
-   ```gradle
-   plugins {
-   id("com.google.dagger.hilt.android") version "2.44" apply false
-   }
+### Step 2: Create the `credentials.properties` File
+
+1. In the root directory of your project, create a file named `credentials.properties`.
+2. Add the following content to the file, replacing placeholders with your actual GitHub credentials:
+
+   ```properties
+   username=your-github-username
+   password=your-personal-access-token
    ```
-
-2. Add the Hilt dependencies to the app-level build.gradle(**android/app/build.gradle**)
-
-   ```gradle
-   plugins {
-     kotlin("kapt")
-     id("com.google.dagger.hilt.android")
-   }
-
-   android {
-       ...
-       compileOptions {
-           sourceCompatibility = JavaVersion.VERSION_11
-           targetCompatibility = JavaVersion.VERSION_11
-       }
-   }
-
-   dependencies {
-           implementation "androidx.hilt:hilt-navigation-compose:1.0.0"
-           implementation "com.google.dagger:hilt-android:2.44"
-           kapt "com.google.dagger:hilt-android-compiler:2.44"
-   }
-   ````
-
-3. Create a Custom Application Class: If your users don't already have a custom Application class in their Android project, they should create one. This class will be used to initialize Hilt.
-
-```kotlin
-import android.app.Application;
-import dagger.hilt.android.HiltAndroidApp;
-
-@HiltAndroidApp
-class MyApplication : Application {
-    // ...
-}
-```
-
-4. Modify AndroidManifest.xml: In the AndroidManifest.xml file of their app, users should specify the custom Application class they created as the application name. This tells Android to use their custom Application class when the app starts.
-
-```xml
-<application
-    android:name=".MyApplication" <!-- Specify the name of your custom Application class -->
-    android:icon="@mipmap/ic_launcher"
-    android:label="@string/app_name"
-    android:theme="@style/AppTheme">
-    <!-- ... -->
-</application>
-```
+   
 ---
 ### iOS
 ### Require Configurations
@@ -162,7 +124,8 @@ final _jioCoreSdkPlugin = JioCoreSdkPlugin();
 #### Join Meeting :
 ```dart   
 try {
-await _coresdkPlugin.launchMeetingCoreTemplateUi("meeting_id", "meeting_password", "meeting_title","pass bool value of isInitialAudioOn", "pass bool value of isInitialVideoOn");
+var meetingDetails = MeetingDetails(meetingId: "meeting_Id", meetingPin: "meeting_pin", displayName: "display_name", isInitialAudioOn: false, isInitialVideoOn: false, hostToken: "host_token");
+await _coresdkPlugin.launchMeetingCoreTemplateUi(meetingDetails);
 } on PlatformException {
 _meetingStatus = "error while joining";
 }
@@ -205,6 +168,7 @@ we can find all feature flags in SetCoreSdkConfig class.
 import 'dart:async';
 
 import 'package:coresdk_plugin/coresdk_plugin.dart';
+import 'package:coresdk_plugin/meeting_details.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 
@@ -256,8 +220,8 @@ class _MyAppState extends State<MyApp> {
                      TextButton(
                         onPressed: () async {
                            try {
-                              await _coresdkPlugin.launchMeetingCoreTemplateUi(
-                                      "meeting_id", "meeting_password", "meeting_title");
+                             var meetingDetails = MeetingDetails(meetingId: "meeting_id", meetingPin: "meeting_pin", displayName: "display_name", isInitialAudioOn: false, isInitialVideoOn: false, hostToken: "hostToken");
+                             await _coresdkPlugin.launchMeetingCoreTemplateUi(meetingDetails);
                            } on PlatformException {
                               _meetingStatus = "error while joining";
                            }

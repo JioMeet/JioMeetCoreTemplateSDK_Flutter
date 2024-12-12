@@ -1,27 +1,21 @@
 package jio.coresdk.coresdk_plugin
 
-import android.content.Intent
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.util.Log
 import android.widget.Toast
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.activity.result.contract.ActivityResultContracts
-import androidx.compose.foundation.layout.Column
-import com.jiomeet.core.main.models.Audience
+import com.jiomeet.core.CoreApplication
+import com.jiomeet.core.constant.Constant
 import com.jiomeet.core.main.models.JMJoinMeetingConfig
 import com.jiomeet.core.main.models.JMJoinMeetingData
 import com.jiomeet.core.main.models.JMMeetingUser
 import com.jiomeet.core.main.models.Speaker
-import dagger.hilt.android.AndroidEntryPoint
-import org.jio.sdk.analytics.AnalyticsEvent
-import org.jio.sdk.common.customview.CustomView
-import org.jio.sdk.common.utilities.Log
+import com.jiomeet.core.utils.BaseUrl
 import org.jio.sdk.sdkmanager.JioMeetConnectionListener
-import org.jio.sdk.templates.core.CoreNav
-import org.jio.sdk.templates.core.model.CoreData
+import org.jio.sdk.templates.core.LaunchCore
 
-@AndroidEntryPoint
 class LaunchMeetingCoreTemplateUIActivity : ComponentActivity() {
     private val jioMeetConnectionListener = object : JioMeetConnectionListener {
         override fun onLeaveMeeting() {
@@ -53,6 +47,7 @@ class LaunchMeetingCoreTemplateUIActivity : ComponentActivity() {
             Toast.makeText(applicationContext, getString(R.string.internet_message),Toast.LENGTH_SHORT).show()
             finish()
         } else if (HelperClass.checkPermission(this)) {
+            CoreApplication().recreateModules(this@LaunchMeetingCoreTemplateUIActivity)
             openMeetingCoreTemplateUI()
         } else{
             requestPermissionLauncher.launch(PermissionConstant.requiredPermissions)
@@ -66,10 +61,13 @@ class LaunchMeetingCoreTemplateUIActivity : ComponentActivity() {
         val displayName = data?.getString(Constants.MeetingDetails.DISPLAYNAME) ?: ""
         val isInitialAudioOn = data?.getBoolean(Constants.MeetingDetails.ISINITIALAUDIOON) ?: false
         val isInitialVideoOn = data?.getBoolean(Constants.MeetingDetails.ISINITIALVIDEOON) ?: false
+        val hostToken = data?.getString(Constants.MeetingDetails.HOSTTOKEN) ?: null
+
         val jmJoinMeetingData = JMJoinMeetingData(
             meetingId = meetingId,
             meetingPin = meetingPin,
             displayName = displayName,
+            hostToken = hostToken,
             version = "",
             deviceId = ""
 
@@ -80,17 +78,11 @@ class LaunchMeetingCoreTemplateUIActivity : ComponentActivity() {
             isInitialVideoOn = isInitialVideoOn,
         )
         setContent {
-            val coreData =  CoreData(
-                clientToken = "",
-                coreListener = jioMeetConnectionListener,
-                hostToken = "null",
+            LaunchCore(
+                jioMeetConnectionListener = jioMeetConnectionListener,
                 jmJoinMeetingConfig = jmJoinMeetingConfig,
                 jmJoinMeetingData = jmJoinMeetingData
             )
-            Column {
-                Log.d("**CoreScreen","$coreData")
-                CoreNav(coreData = coreData)
-            }
         }
     }
 }

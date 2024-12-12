@@ -32,30 +32,40 @@ class JioCoreSdkPlugin : FlutterPlugin, MethodCallHandler {
     override fun onMethodCall(call: MethodCall, result: Result) {
         when (call.method) {
             Constants.MethodNames.LAUNCHMEETINGCORETEMPLATEUI -> {
-                val bundle: Bundle = Bundle().apply {
-                    putString(
-                        Constants.MeetingDetails.MEETINGID,
-                        call.argument<String>("meetingId").toString()
-                    )
-                    putString(
-                        Constants.MeetingDetails.MEETINGPIN,
-                        call.argument<String>("meetingPin").toString()
-                    )
-                    putString(
-                        Constants.MeetingDetails.DISPLAYNAME,
-                        call.argument<String>("displayName").toString()
-                    )
-                    putBoolean(
-                        Constants.MeetingDetails.ISINITIALAUDIOON,
-                        call.argument<Boolean>("isInitialAudioOn") ?: false
-                    )
-                    putBoolean(
-                        Constants.MeetingDetails.ISINITIALVIDEOON,
-                        call.argument<Boolean>("isInitialVideoOn") ?: false
-                    )
+                val meetingDetailsJson = call.argument<String>("meeting_details").toString()
+                val meetingDetails = MeetingDetails.fromJson(meetingDetailsJson)
+                meetingDetails?.let {
+                    val bundle : Bundle = Bundle().apply {
+                        putString(
+                            Constants.MeetingDetails.MEETINGID,
+                            it.meetingId
+                        )
+                        putString(
+                            Constants.MeetingDetails.MEETINGPIN,
+                            it.meetingPin
+                        )
+
+                        putString(
+                            Constants.MeetingDetails.HOSTTOKEN,
+                            it.hostToken
+                        )
+
+                        putString(
+                            Constants.MeetingDetails.DISPLAYNAME,
+                            it.displayName
+                        )
+                        putBoolean(
+                            Constants.MeetingDetails.ISINITIALAUDIOON,
+                            it.isInitialAudioOn
+                        )
+                        putBoolean(
+                            Constants.MeetingDetails.ISINITIALVIDEOON,
+                            it.isInitialVideoOn
+                        )
+                    }
+                    launchNativeActivity(bundle = bundle)
+                    result.success("")
                 }
-                launchNativeActivity(bundle = bundle)
-                result.success("")
             }
 
             Constants.MethodNames.SETENVIRONMENT -> {
@@ -63,9 +73,12 @@ class JioCoreSdkPlugin : FlutterPlugin, MethodCallHandler {
                     Constants.Environments.PRESTAGE -> Constant.Environment.PRESTAGE
                     Constants.Environments.RC -> Constant.Environment.RC
                     Constants.Environments.VirginGroups -> Constant.Environment.VirginGroups
-                    else -> Constant.Environment.PROD
+                    Constants.Environments.Prod -> Constant.Environment.PROD
+                    else -> {
+                        Constant.Environment.PROD
+                    }
                 }
-                BaseUrl.initializedNetworkInformation(context, selectedEnvironment = environment)
+                BaseUrl.initializedNetworkInformation(selectedEnvironment = environment)
             }
 
             Constants.MethodNames.SETCORESDKCONFIG -> {
@@ -83,6 +96,7 @@ class JioCoreSdkPlugin : FlutterPlugin, MethodCallHandler {
                         isRecordingEnabled = it.isRecordingEnabled
                         isShareEnabled = it.isShareEnabled
                         isVirtualBackgroundEnabled = it.isVirtualBackgroundEnabled
+                        isReactionEnabled = it.isReactionEnabled
                     }
                     JioMeetCoreTemplateUiConfig.FeatureManager.TopControlBar.apply {
                         showAudioOptions = it.showAudioOptions
@@ -90,7 +104,6 @@ class JioCoreSdkPlugin : FlutterPlugin, MethodCallHandler {
                         showMeetingTimer = it.showMeetingTimer
                         showMeetingTitle = it.showMeetingTitle
                         showConnectionStateIndicator = it.showConnectionStateIndicator
-
                     }
                 }
             }

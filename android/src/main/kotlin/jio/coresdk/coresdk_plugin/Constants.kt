@@ -7,6 +7,7 @@ class Constants {
         const val DISPLAYNAME = "displayName"
         const val ISINITIALAUDIOON = "isInitialAudioOn"
         const val ISINITIALVIDEOON = "isInitialVideoOn"
+        const val HOSTTOKEN = "host_token"
     }
 
     object MethodNames {
@@ -20,5 +21,6 @@ class Constants {
         const val RC = "rc"
         const val PRESTAGE = "prestage"
         const val VirginGroups = "virginGroups"
+        const val Prod = "prod"
     }
 }
