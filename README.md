@@ -133,8 +133,9 @@ Go to your Podfile. Add `JioMeetScreenShareSDK_iOS` pod for your newly created b
 
 ```ruby
 target 'ScreenShareExtension' do
-    use_frameworks!
+    inherit! :search_paths
     pod 'JioMeetScreenShareSDK_iOS', '4.0.7'
+  end
 end
 ```
 
