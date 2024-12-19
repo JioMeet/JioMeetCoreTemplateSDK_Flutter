@@ -49,7 +49,7 @@ Before you begin, ensure you have met the following requirements:
   coresdk_plugin:
     git:
       url: https://github.com/JioMeet/JioMeetCoreTemplateSDK_Flutter.git
-      ref: 0.0.17
+      ref: 0.0.18
 ```
 #### Authentication
 2. Add `credentials.properties` File to Your Project Root
@@ -97,6 +97,83 @@ Please add below permissions keys to your `Info.plist` file with proper descript
 ### Enable Background Mode
 
 Please enable `Background Modes` in your project `Signing & Capibilities` tab. After enabling please check box with option `Audio, Airplay, and Pictures in Pictures`. If you don't enables this setting, your mic will be muted when your app goes to background.
+
+#### Screen Share Integration
+
+
+#### Add Broadcast Upload Extension
+
+You need to create a Broadcast Upload Extension to enable the screen sharing process. To do that,
+
+open your example project, go to **Xcode -> File -> Target... ->** 
+
+![create_broadcast_upload_extension](https://storage.googleapis.com/cpass-sdk/assets/screenshots/iOS/screenshare_1.png)
+
+Select **Broadcast Upload Extension** and click on **Next**
+
+![select_broadcast_upload_extension](https://storage.googleapis.com/cpass-sdk/assets/screenshots/iOS/screenshare_2.png)
+
+Fill the **Product name** and other info, uncheck **Include UI Extension**, and click **Finish**.
+
+![broadcast_upload_extension_info](https://storage.googleapis.com/cpass-sdk/assets/screenshots/iOS/screenshare_3.png)
+
+Activate the Extension
+
+![activate_broadcast_upload_extension](https://storage.googleapis.com/cpass-sdk/assets/screenshots/iOS/screenshare_4.png)
+
+Xcode automatically creates the Extension folder, which contains the **SampleHandler.swift** file.
+
+
+**NOTE: Please set deployment target for Broadcast Upload Extension same as of your main app.**
+
+
+#### Add JioMeet Screen Share SDK
+
+Go to your Podfile. Add `JioMeetScreenShareSDK_iOS` pod for your newly created broadcast upload extension and run `pod install --repo-update --verbose` command to install the SDK.
+
+```ruby
+target 'ScreenShareExtension' do
+    use_frameworks!
+    pod 'JioMeetScreenShareSDK_iOS', '4.0.7'
+end
+```
+
+Also pass below screen share configuration before joining the meeting to support iOS Screen Share
+
+```ruby
+   if (Platform.isIOS) {
+      var screenShareConfig = ScreenshareConfig(appGroupName: "YOUR_APP_GROUP_NAME_IDENTIFIER", screenShareExtensionBundleIdentifier: "BROADCAST_UPLOAD_EXTENSION_IDENTIFIER");
+      _coresdkPlugin.setScreenShareConfig(screenShareConfig);
+   }
+```
+**NOTE: `ScreenShareExtension` is name of target you fill while creating `Broadcast Upload Extension`**
+
+
+### Enable App Groups
+
+You need to enable app groups for your main app and screenshare extension. Please follow guide from below link.
+[https://developer.apple.com/documentation/xcode/configuring-app-groups](https://developer.apple.com/documentation/xcode/configuring-app-groups)
+
+[https://www.appcoda.com/app-group-macos-ios-communication/](https://www.appcoda.com/app-group-macos-ios-communication/)
+
+
+#### Edit `SampleHandler` file.
+
+Go to your `SampleHandler.swift` file. Replace the whole file content with content below.
+
+**NOTE: Please change `YOUR_APP_GROUP_NAME_IDENTIFIER` with app group you created in above step.**
+
+```swift
+import ReplayKit
+import JioMeetScreenShareSDK
+
+class SampleHandler: JMScreenShareHandler {
+
+    override func getAppGroupsIdentifier() -> String {
+        return "YOUR_APP_GROUP_NAME_IDENTIFIER"
+    }
+}
+```
 
 ---
 ## Setup

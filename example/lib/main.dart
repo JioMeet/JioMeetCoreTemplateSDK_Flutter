@@ -1,8 +1,10 @@
 import 'dart:async';
+import 'dart:io';
 
 import 'package:coresdk_plugin/Environment.dart';
 import 'package:coresdk_plugin/coresdk_plugin.dart';
 import 'package:coresdk_plugin/meeting_details.dart';
+import 'package:coresdk_plugin/screenshare_config.dart';
 import 'package:coresdk_plugin/set_coresdk_config.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
@@ -28,6 +30,10 @@ class _MyAppState extends State<MyApp> {
     super.initState();
     coreSdkPluginCallbacks();
     _coresdkPlugin.setEnvironment(NetWorkEnvironment.prod);
+    if (Platform.isIOS) {
+      var screenShareConfig = ScreenshareConfig(appGroupName: "group.com.jio.jiomeet.nativesdk", screenShareExtensionBundleIdentifier: "com.jio.jiomeet.nativesdk.broadcast");
+      _coresdkPlugin.setScreenShareConfig(screenShareConfig);
+    }
   }
 
   Future<void> coreSdkPluginCallbacks() async {
@@ -38,7 +44,7 @@ class _MyAppState extends State<MyApp> {
         });
       }
     });
-    var config = SetCoreSdkConfig(enableFlipCamera: true);
+    var config = SetCoreSdkConfig(enableFlipCamera: true, isMoreFeaturesEnabled:true, isShareEnabled: true);
    await _coresdkPlugin.setConfig(config);
   }
 

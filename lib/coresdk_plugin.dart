@@ -1,5 +1,6 @@
 
 import 'package:coresdk_plugin/Environment.dart';
+import 'package:coresdk_plugin/screenshare_config.dart';
 import 'package:coresdk_plugin/set_coresdk_config.dart';
 import 'package:coresdk_plugin/meeting_details.dart';
 import 'coresdk_plugin_platform_interface.dart';
@@ -22,4 +23,7 @@ class JioCoreSdkPlugin {
     return CoreSdkPluginPlatform.instance.setConfig(config);
   }
 
+  Future<void> setScreenShareConfig(ScreenshareConfig config) {
+    return CoreSdkPluginPlatform.instance.setScreenShareConfig(config);
+  }
 }

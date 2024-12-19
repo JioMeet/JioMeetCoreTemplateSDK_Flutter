@@ -1,5 +1,5 @@
 PODS:
-  - coresdk_plugin (0.0.1):
+  - coresdk_plugin (0.0.18):
     - Flutter
     - JioMeetChatUIKit_iOS (= 4.0.7)
     - JioMeetParticipantPanelSDK_iOS (= 4.0.7)
@@ -21,6 +21,8 @@ PODS:
     - JioMeetCoreSDK_iOS (= 4.0.7)
     - JioMeetUIFoundation_iOS (= 4.0.7)
     - lottie-ios (~> 4.3)
+  - JioMeetScreenShareSDK_iOS (4.0.7):
+    - JMMediaStackSDK_iOS (= 1.0.8-alpha.10)
   - JioMeetUIFoundation_iOS (4.0.7):
     - JioMeetCoreSDK_iOS (= 4.0.7)
   - JioMeetUIKit_iOS (4.0.7):
@@ -51,6 +53,7 @@ DEPENDENCIES:
   - coresdk_plugin (from `.symlinks/plugins/coresdk_plugin/ios`)
   - Flutter (from `Flutter`)
   - integration_test (from `.symlinks/plugins/integration_test/ios`)
+  - JioMeetScreenShareSDK_iOS (= 4.0.7)
 
 SPEC REPOS:
   trunk:
@@ -58,6 +61,7 @@ SPEC REPOS:
     - JioMeetCoreSDK_iOS
     - JioMeetParticipantPanelSDK_iOS
     - JioMeetReactions_iOS
+    - JioMeetScreenShareSDK_iOS
     - JioMeetUIFoundation_iOS
     - JioMeetUIKit_iOS
     - JioMeetVBGUIKit_iOS
@@ -79,13 +83,14 @@ EXTERNAL SOURCES:
     :path: ".symlinks/plugins/integration_test/ios"
 
 SPEC CHECKSUMS:
-  coresdk_plugin: cf2e04e5963aa24b8ed76ad7b69e285ab4aaf91f
+  coresdk_plugin: b94af1c5ca35d3acf897d42bb66164ef2286ec4c
   Flutter: e0871f40cf51350855a761d2e70bf5af5b9b5de7
   integration_test: 252f60fa39af5e17c3aa9899d35d908a0721b573
   JioMeetChatUIKit_iOS: 3ce8d9598f349fbe311c3f44a2f4d1297474d49e
   JioMeetCoreSDK_iOS: 726a244930880ef645af62f790fb0cea7479ac65
   JioMeetParticipantPanelSDK_iOS: 0df24066c63a88c0a77d8ba859a6b9fa6552117b
   JioMeetReactions_iOS: 86065bf3fb53c9dc5f10aa69133d8e8ab47c3fbb
+  JioMeetScreenShareSDK_iOS: be36e5de50895e3ea6fa4e7de5b2ac0d833f5361
   JioMeetUIFoundation_iOS: da04a222383e66e261b1a3b5a830f34889f67ffb
   JioMeetUIKit_iOS: 15a2914c0dc293f94cc1812b9577ffed74f94cde
   JioMeetVBGUIKit_iOS: 18091892afb1c0974497dee4cd470692a94dbb4e
@@ -98,6 +103,6 @@ SPEC CHECKSUMS:
   Starscream: 19b5533ddb925208db698f0ac508a100b884a1b9
   SwiftyJSON: f5b1bf1cd8dd53cd25887ac0eabcfd92301c6a5a
 
-PODFILE CHECKSUM: c00921988137b5b0d02d6aaf459185f39d4df405
+PODFILE CHECKSUM: 511869b7566c30cd1db700a6bf1b7132fcc37d85
 
 COCOAPODS: 1.16.2

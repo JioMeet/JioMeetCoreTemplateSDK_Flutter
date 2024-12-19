@@ -32,6 +32,12 @@ target 'Runner' do
   use_modular_headers!
 
   flutter_install_all_ios_pods File.dirname(File.realpath(__FILE__))
+  
+  target 'ScreenShareExtension' do
+    inherit! :search_paths
+    pod 'JioMeetScreenShareSDK_iOS', '4.0.7'
+    # Add specific pods for the extension if needed
+  end
   target 'RunnerTests' do
     inherit! :search_paths
   end

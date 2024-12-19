@@ -1,3 +1,4 @@
+import 'package:coresdk_plugin/screenshare_config.dart';
 import 'package:coresdk_plugin/set_coresdk_config.dart';
 import 'package:plugin_platform_interface/plugin_platform_interface.dart';
 
@@ -40,5 +41,9 @@ abstract class CoreSdkPluginPlatform extends PlatformInterface {
 
   Future<void> setConfig(SetCoreSdkConfig config) {
     throw UnimplementedError('setConfig has not been implemented.');
+  }
+
+  Future<void> setScreenShareConfig(ScreenshareConfig config) {
+    throw UnimplementedError('setScreenShareConfig has not been implemented.');
   }
 }

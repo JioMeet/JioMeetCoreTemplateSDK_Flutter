@@ -18,6 +18,8 @@ public class JioCoreSdkPlugin: NSObject, FlutterPlugin {
             loadTemplateSDK(data: arguments)
         case "setEnvironment":
             setEnvironment(data: arguments)
+        case "setScreenShareConfig":
+            setScreenShareConfig(data: arguments)
         case "setCoreSdkConfig":
             setConfigValues(data: arguments)
         case "setAuthParams":
@@ -41,6 +43,10 @@ public class JioCoreSdkPlugin: NSObject, FlutterPlugin {
     
     private func setUserLogin(data: [String: Any]) {
         jmMeetigHandler.setUserLogin(data: data)
+    }
+    
+    private func setScreenShareConfig(data: [String: Any]) {
+        jmMeetigHandler.setScreenShareConfig(data: data)
     }
 }
 

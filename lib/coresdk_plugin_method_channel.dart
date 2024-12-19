@@ -1,4 +1,5 @@
 import 'package:coresdk_plugin/meeting_details.dart';
+import 'package:coresdk_plugin/screenshare_config.dart';
 import 'package:coresdk_plugin/set_coresdk_config.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/services.dart';
@@ -49,6 +50,15 @@ class MethodChannelCoreSdkPlugin extends CoreSdkPluginPlatform {
     };
      return await methodChannel.invokeMethod<String>(
         'setCoreSdkConfig', configParams);
+  }
+
+  @override
+  Future<String?> setScreenShareConfig(ScreenshareConfig config) async {
+    final Map<String, dynamic> configParams = <String, dynamic>{
+      'screenShareConfig': config.toJson(),
+    };
+    return await methodChannel.invokeMethod<String>(
+        'setScreenShareConfig', configParams);
   }
 
 }

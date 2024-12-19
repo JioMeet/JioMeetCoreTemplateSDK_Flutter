@@ -55,7 +55,18 @@ class JMMeetingHandler: NSObject {
             }
         }
     }
-
+    
+    func setScreenShareConfig (data: [String: Any]) {
+        guard let config = data["screenShareConfig"] as? [String: Any] else { return }
+        if let appGroupName = config["appGroupName"] as? String {
+            JMUIKit.appGroupName = appGroupName
+        }
+        if let screenShareExtensionBundleIdentifier = config["screenShareExtensionBundleIdentifier"] as? String {
+            JMUIKit.screenShareExtensionBundleIdentifier = screenShareExtensionBundleIdentifier
+            JMUIKit.isScreenShareEnabled = true
+        }
+    }
+    
     func setEnvironment(data: [String: Any]) {
         guard let enviroment = data["environmentName"] as? String else { return }
         if  enviroment == "prod" {
@@ -86,7 +97,6 @@ class JMMeetingHandler: NSObject {
             JMUIKit.isRecordingEnabled = isRecordingEnabled
         }
         if let isShareEnabled = config["isShareEnabled"] as? Bool {
-            JMUIKit.isScreenShareEnabled = isShareEnabled
             JMUIKit.isWhiteboardEnabled = isShareEnabled
         }
         if let isVirtualBackgroundEnabled = config["isVirtualBackgroundEnabled"] as? Bool {
