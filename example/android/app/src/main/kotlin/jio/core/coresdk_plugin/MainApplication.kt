@@ -1,4 +1,4 @@
-package jio.coresdk.coresdk_plugin_example
+package jio.core.coresdk_plugin
 
 import android.app.Application
 
