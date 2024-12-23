@@ -18,10 +18,9 @@ buildscript {
 }
 
 def properties = new Properties()
-def rootPropertiesFile = file("${rootDir}/../../credentials.properties")
+def rootPropertiesFile = file("${rootDir}/../credentials.properties")
 
 if (rootPropertiesFile.exists()) {
-    System.out.println("Exists")
     rootPropertiesFile.withInputStream { stream ->
     properties.load(stream)
   }
@@ -51,7 +50,7 @@ android {
         compose true
     }
     composeOptions {
-        kotlinCompilerExtensionVersion "1.3.2"
+        kotlinCompilerExtensionVersion "1.4.8"
     }
 
     kotlinOptions {
