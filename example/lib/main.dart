@@ -64,7 +64,7 @@ class _MyAppState extends State<MyApp> {
               TextButton(
                 onPressed: () async {
                   try {
-                  var meetingDetails = MeetingDetails(meetingId: "6529338741", meetingPin: "XchN4", displayName: "display_name", isInitialAudioOn: false, isInitialVideoOn: false);
+                  var meetingDetails = MeetingDetails(meetingId: "meeting_id", meetingPin: "meeting_password", displayName: "display_name", isInitialAudioOn: false, isInitialVideoOn: false);
                   await _coresdkPlugin.launchMeetingCoreTemplateUi(meetingDetails);
                   } on PlatformException {
                     _meetingStatus = "error while joining";

@@ -4,13 +4,15 @@
 1. [Introduction](#introduction)
 2. [Features](#features)
 3. [Prerequisites](#prerequisites)
-   - [Android](#android)
-      - [Add Plugin](#add-plugin)
-      - [Authentication](#authentication)
-   - [iOS](#ios)
-      - [Require Configurations](#require-configurations)
-      - [Info.plist Changes](#infoplist-changes)
-      - [Enable Background Mode](#enable-background-mode)
+    - [Add Plugin](#add-plugin)
+    - [Android](#android)
+        - [Authentication](#authentication)
+        - [Required Build Gradle Changes for Namespace and Kotlin Compatibility](#required-build-gradle-changes-for-namespace-and-kotlin-compatibility)
+        - [Resolving Android Manifest Issues ](#resolving-android-manifest-issues)
+    - [iOS](#ios)
+        - [Require Configurations](#require-configurations)
+        - [Info.plist Changes](#infoplist-changes)
+        - [Enable Background Mode](#enable-background-mode)
 4. [Setup](#setup)
 5. [Usage](#usage)
 6. [Example](#Example)
@@ -40,27 +42,26 @@ In Flutter Plugin , you'll find a range of powerful features designed to enhance
 
 Before you begin, ensure you have met the following requirements:
 
-### Android:
 #### Add plugin:
 
-1. You need to  add the necessary configurations to your   project's `pubspec.yaml` file:
+You need to  add the necessary configurations to your   project's `pubspec.yaml` file:
 
 ```yaml
-  coresdk_plugin:
-    git:
-      url: https://github.com/JioMeet/JioMeetCoreTemplateSDK_Flutter.git
-      ref: 0.0.18
+   coresdk_plugin:
+      git:
+         url: https://github.com/JioMeet/JioMeetCoreTemplateSDK_Flutter.git
+         ref: 0.0.18
 ```
-#### Authentication
-2. Add `credentials.properties` File to Your Project Root
 
-To securely add your GitHub credentials, follow these steps to create a `credentials.properties` file in the root directory of your project:
+### Android:
+
+#### Authentication
 
 ### Step 1: Generate a Personal Access Token for GitHub
 
 1. Go to **Settings** > **Developer Settings** > **Personal Access Tokens** > **Tokens (classic)** > **Generate new token**.
 2. Select the following scope:
-   - `read:packages`
+    - `read:packages`
 3. Generate the token and **copy it immediately**. You cannot view the token again once you leave the page. If lost, you will need to generate a new one.
 
 ### Step 2: Create the `credentials.properties` File
@@ -72,7 +73,55 @@ To securely add your GitHub credentials, follow these steps to create a `credent
    username=your-github-username
    password=your-personal-access-token
    ```
-   
+
+#### Required Build Gradle Changes for Namespace and Kotlin Compatibility
+
+In case you face namespace issues or need to ensure Kotlin JVM compatibility across the project, follow the steps below.
+
+### Step 1: Open the Project-Level `build.gradle`
+This file is usually located at the root of your Android project, alongside the `app/`, `gradle/` directories.
+
+### Step 2: Add the Code for Namespace and Kotlin JVM Target
+Add the following block of code to the **project-level** `build.gradle` file (not the `app/build.gradle` file):
+
+   ```gradle
+   allprojects {
+        repositories {
+            google()
+            mavenCentral()
+        }
+        subprojects {
+            afterEvaluate { project ->
+                if (project.hasProperty('android')) {
+                    project.android {
+                        if (namespace == null) {
+                            namespace project.group
+                        }
+                    }
+                }
+            }
+        }
+    }
+    subprojects {
+        tasks.withType(org.jetbrains.kotlin.gradle.tasks.KotlinCompile) {
+            kotlinOptions.jvmTarget = "11"
+        }
+    }
+
+  
+   ```
+
+#### Resolving Android Manifest Issues
+If you encounter errors related to the `android:name` attribute in the `AndroidManifest.xml` (such as conflicts between libraries or SDKs), add the following line inside the `<application>` tag in your `app/src/main/AndroidManifest.xml`:
+
+```xml
+   <application
+      android:name="${applicationName}"
+      tools:replace="android:name">
+      <!-- other configuration here -->
+   </application>
+```  
+
 ---
 ### iOS
 ### Require Configurations
@@ -105,7 +154,7 @@ Please enable `Background Modes` in your project `Signing & Capibilities` tab. A
 
 You need to create a Broadcast Upload Extension to enable the screen sharing process. To do that,
 
-open your example project, go to **Xcode -> File -> Target... ->** 
+open your example project, go to **Xcode -> File -> Target... ->**
 
 ![create_broadcast_upload_extension](https://storage.googleapis.com/cpass-sdk/assets/screenshots/iOS/screenshare_1.png)
 
@@ -218,6 +267,54 @@ static const platform = MethodChannel('coresdk_plugin');
 2
 ```dart
   @override
+void initState() {
+  super.initState();
+  coreSdkPluginCallbacks();
+}
+
+Future<void> coreSdkPluginCallbacks() async {
+  platform.setMethodCallHandler((call) async {
+    if (call.method == "meetingEnded") {
+      setState(() {
+        _meetingStatus = "Ended";
+      });
+    }
+  });
+}
+```
+#### config features, like we have to enable/disable the feature of switch camera, screen share, participant panel
+we can find all feature flags in SetCoreSdkConfig class.
+`````dart
+   var config = SetCoreSdkConfig(enableFlipCamera: true);
+await _coresdkPlugin.setConfig(config);
+`````
+
+### Example
+```dart
+import 'dart:async';
+
+import 'package:coresdk_plugin/coresdk_plugin.dart';
+import 'package:coresdk_plugin/meeting_details.dart';
+import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
+
+void main() {
+  runApp(const MyApp());
+}
+
+class MyApp extends StatefulWidget {
+  const MyApp({super.key});
+
+  @override
+  State<MyApp> createState() => _MyAppState();
+}
+
+class _MyAppState extends State<MyApp> {
+  final _coresdkPlugin = JioCoreSdkPlugin();
+  static const platform = MethodChannel('coresdk_plugin');
+  String _meetingStatus = 'Not started';
+
+  @override
   void initState() {
     super.initState();
     coreSdkPluginCallbacks();
@@ -232,85 +329,37 @@ static const platform = MethodChannel('coresdk_plugin');
       }
     });
   }
-```
-#### config features, like we have to enable/disable the feature of switch camera, screen share, participant panel
-we can find all feature flags in SetCoreSdkConfig class.
-`````dart
-   var config = SetCoreSdkConfig(enableFlipCamera: true);
-   await _coresdkPlugin.setConfig(config);
-`````
 
-### Example
-```dart
-import 'dart:async';
-
-import 'package:coresdk_plugin/coresdk_plugin.dart';
-import 'package:coresdk_plugin/meeting_details.dart';
-import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
-
-void main() {
-   runApp(const MyApp());
-}
-
-class MyApp extends StatefulWidget {
-   const MyApp({super.key});
-
-   @override
-   State<MyApp> createState() => _MyAppState();
-}
-
-class _MyAppState extends State<MyApp> {
-   final _coresdkPlugin = JioCoreSdkPlugin();
-   static const platform = MethodChannel('coresdk_plugin');
-   String _meetingStatus = 'Not started';
-
-   @override
-   void initState() {
-      super.initState();
-      coreSdkPluginCallbacks();
-   }
-
-   Future<void> coreSdkPluginCallbacks() async {
-      platform.setMethodCallHandler((call) async {
-         if (call.method == "meetingEnded") {
-            setState(() {
-               _meetingStatus = "Ended";
-            });
-         }
-      });
-   }
-
-   @override
-   Widget build(BuildContext context) {
-      return MaterialApp(
-         home: Scaffold(
-            appBar: AppBar(
-               title: const Text('Plugin example app'),
-            ),
-            body: Center(
-               child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.center,
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: [
-                     Text('meeting Status:  $_meetingStatus\n'),
-                     TextButton(
-                        onPressed: () async {
-                           try {
-                             var meetingDetails = MeetingDetails(meetingId: "meeting_id", meetingPin: "meeting_pin", displayName: "display_name", isInitialAudioOn: false, isInitialVideoOn: false, hostToken: "hostToken");
-                             await _coresdkPlugin.launchMeetingCoreTemplateUi(meetingDetails);
-                           } on PlatformException {
-                              _meetingStatus = "error while joining";
-                           }
-                        },
-                        child: const Text('Join Meeting'),
-                     ),
-                  ],
-               ),
-            ),
-         ),
-      );
-   }
+  @override
+  Widget build(BuildContext context) {
+    return MaterialApp(
+      home: Scaffold(
+        appBar: AppBar(
+          title: const Text('Plugin example app'),
+        ),
+        body: Center(
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.center,
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+              Text('meeting Status:  $_meetingStatus\n'),
+              TextButton(
+                onPressed: () async {
+                  try {
+                    var meetingDetails = MeetingDetails(meetingId: "meeting_id", meetingPin: "meeting_pin", displayName: "display_name", isInitialAudioOn: false, isInitialVideoOn: false, hostToken: "hostToken");
+                    await _coresdkPlugin.launchMeetingCoreTemplateUi(meetingDetails);
+                  } on PlatformException {
+                    _meetingStatus = "error while joining";
+                  }
+                },
+                child: const Text('Join Meeting'),
+              ),
+            ],
+          ),
+        ),
+      ),
+    );
+  }
 }
 ```
 
