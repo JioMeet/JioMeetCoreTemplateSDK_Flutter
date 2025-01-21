@@ -10,6 +10,7 @@ import io.flutter.plugin.common.MethodChannel
 import io.flutter.plugin.common.MethodChannel.MethodCallHandler
 import io.flutter.plugin.common.MethodChannel.Result
 import com.jiomeet.core.utils.BaseUrl
+import com.jiomeet.core.CoreApplication
 import org.jio.sdk.config.JioMeetCoreTemplateUiConfig
 import org.json.JSONObject
 
@@ -78,6 +79,7 @@ class JioCoreSdkPlugin : FlutterPlugin, MethodCallHandler {
                         Constant.Environment.PROD
                     }
                 }
+                CoreApplication().recreateModules(context)
                 BaseUrl.initializedNetworkInformation(selectedEnvironment = environment)
             }
 

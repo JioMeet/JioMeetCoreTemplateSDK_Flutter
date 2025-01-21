@@ -6,7 +6,6 @@ import android.widget.Toast
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.activity.result.contract.ActivityResultContracts
-import com.jiomeet.core.CoreApplication
 import com.jiomeet.core.constant.Constant
 import com.jiomeet.core.main.models.JMJoinMeetingConfig
 import com.jiomeet.core.main.models.JMJoinMeetingData
@@ -47,7 +46,6 @@ class LaunchMeetingCoreTemplateUIActivity : ComponentActivity() {
             Toast.makeText(applicationContext, getString(R.string.internet_message),Toast.LENGTH_SHORT).show()
             finish()
         } else if (HelperClass.checkPermission(this)) {
-            CoreApplication().recreateModules(this@LaunchMeetingCoreTemplateUIActivity)
             openMeetingCoreTemplateUI()
         } else{
             requestPermissionLauncher.launch(PermissionConstant.requiredPermissions)
