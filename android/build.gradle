@@ -1,10 +1,10 @@
 
 group 'jio.coresdk.coresdk_plugin'
-version '0.0.20'
+version '0.0.21'
 
 buildscript {
     ext {
-        kotlin_version = '1.7.20'
+        kotlin_version = '2.0.0'
     }
     repositories {
         google()
@@ -36,6 +36,7 @@ if (!githubUsername || !githubPassword) {
 apply plugin: 'com.android.library'
 apply plugin: 'kotlin-android'
 apply plugin: 'kotlin-kapt'
+apply plugin: 'org.jetbrains.kotlin.plugin.compose'
 
 android {
     compileSdkVersion 31
@@ -82,5 +83,5 @@ dependencies {
     implementation 'androidx.appcompat:appcompat:1.6.1'
     implementation 'androidx.constraintlayout:constraintlayout:2.1.4'
     implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk8:1.8.10"
-    implementation 'com.jiomeet.platform:jiomeetcoretemplatesdk:4.1.1'
+    implementation 'com.jiomeet.platform:jiomeetcoretemplatesdk:4.3.1-SNAPSHOT'
 }
