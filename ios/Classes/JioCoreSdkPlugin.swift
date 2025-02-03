@@ -7,7 +7,6 @@ public class JioCoreSdkPlugin: NSObject, FlutterPlugin {
     public static func register(with registrar: FlutterPluginRegistrar) {
         channel = FlutterMethodChannel(name: "coresdk_plugin", binaryMessenger: registrar.messenger())
         let instance = JioCoreSdkPlugin()
-        instance.jmMeetigHandler.micCameraPermissons()
         registrar.addMethodCallDelegate(instance, channel: channel)
     }
     
@@ -30,7 +29,12 @@ public class JioCoreSdkPlugin: NSObject, FlutterPlugin {
     }
     
     private func loadTemplateSDK(data: [String: Any]) {
-        jmMeetigHandler.showJioMeetView(data: data)
+        let instance = JioCoreSdkPlugin()
+        instance.jmMeetigHandler.micCameraPermissons { isSuccess in
+            if isSuccess {
+                self.jmMeetigHandler.showJioMeetView(data: data)
+            }
+        }
     }
     
     private func setEnvironment(data: [String: Any]) {

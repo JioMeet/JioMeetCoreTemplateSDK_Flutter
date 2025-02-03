@@ -12,7 +12,7 @@ import AVFoundation
 import Flutter
 class JMMeetingHandler: NSObject {
     private var jioMeetView: JMMeetingView!
-    private var environmentName = ""
+    private var environmentName = "production"
     private var jwToken = ""
     private var userID = ""
     func showJioMeetView(data: [String: Any]) {
@@ -146,12 +146,13 @@ class JMMeetingHandler: NSObject {
         topVc.present(errorAlertController, animated: true)
     }
     
-    func micCameraPermissons(){
+    func micCameraPermissons(completion: @escaping ((_ permissionsAllowed: Bool) -> Void)) {
         getAudioVideoAuthorization {[weak self] (isCameraAllowed, isMicAllowed, isFirstTime) in
             guard isCameraAllowed && isMicAllowed else {
                 self?.showMicCameraErrorAlert()
                 return
             }
+            completion(true)
         }
     }
     
