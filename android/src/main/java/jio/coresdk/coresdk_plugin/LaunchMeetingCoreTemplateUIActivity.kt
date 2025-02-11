@@ -22,6 +22,12 @@ class LaunchMeetingCoreTemplateUIActivity : ComponentActivity() {
              finish()
         }
 
+        override fun onLocalJoinedRoom(jmMeetingUser: JMMeetingUser) {
+            super.onLocalJoinedRoom(jmMeetingUser)
+            JioCoreSdkPlugin.channel.invokeMethod("meetingStarted",  true)
+            Log.d("Listener onLocalJoinedRoom", "UID: 0 $jmMeetingUser")
+        }
+
         override fun onRemoveRemoteParticipant(jmMeetingUser: JMMeetingUser) {
 
         }

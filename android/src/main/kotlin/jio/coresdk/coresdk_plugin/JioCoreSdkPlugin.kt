@@ -13,6 +13,7 @@ import com.jiomeet.core.utils.BaseUrl
 import com.jiomeet.core.CoreApplication
 import org.jio.sdk.config.JioMeetCoreTemplateUiConfig
 import org.json.JSONObject
+import org.jio.sdk.sdkmanager.JioMeetSdkManager
 
 
 /** JioCoreSdkPlugin */
@@ -108,6 +109,10 @@ class JioCoreSdkPlugin : FlutterPlugin, MethodCallHandler {
                         showConnectionStateIndicator = it.showConnectionStateIndicator
                     }
                 }
+            }
+
+            Constants.MethodNames.LEAVEMEETING -> {
+                JioMeetSdkManager.instance.leaveCall()
             }
 
             Constants.MethodNames.SETAUTHPARAMS -> {
