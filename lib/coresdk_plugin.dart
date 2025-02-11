@@ -11,6 +11,10 @@ class JioCoreSdkPlugin {
     return CoreSdkPluginPlatform.instance.launchMeetingCoreTemplateUi(meeting_details);
   }
 
+  Future<void> leaveMeeting() {
+    return CoreSdkPluginPlatform.instance.leaveMeeting();
+  }
+
   Future<void> setEnvironment(NetWorkEnvironment environment) {
     return CoreSdkPluginPlatform.instance.setEnvironment(environment.name);
   }

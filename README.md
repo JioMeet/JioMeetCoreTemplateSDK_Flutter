@@ -50,7 +50,7 @@ You need to  add the necessary configurations to your   project's `pubspec.yaml`
    coresdk_plugin:
       git:
          url: https://github.com/JioMeet/JioMeetCoreTemplateSDK_Flutter.git
-         ref: 0.0.22
+         ref: 0.0.23
 ```
 
 ### Android:
@@ -257,6 +257,11 @@ _meetingStatus = "error while joining";
 }
 ```
 
+#### Leave Meeting: 
+```dart   
+_coresdkPlugin.leaveMeeting()
+```
+
 #### Callbacks from plugin:
 
 1 - Register methodchannel
@@ -274,6 +279,12 @@ void initState() {
 
 Future<void> coreSdkPluginCallbacks() async {
   platform.setMethodCallHandler((call) async {
+   if (call.method == "meetingStarted") {
+       setState(() {
+         _meetingStatus = "Started";
+        });
+    }
+    
     if (call.method == "meetingEnded") {
       setState(() {
         _meetingStatus = "Ended";
@@ -322,6 +333,12 @@ class _MyAppState extends State<MyApp> {
 
   Future<void> coreSdkPluginCallbacks() async {
     platform.setMethodCallHandler((call) async {
+      if (call.method == "meetingStarted") {
+       setState(() {
+         _meetingStatus = "Started";
+        });
+      }
+      
       if (call.method == "meetingEnded") {
         setState(() {
           _meetingStatus = "Ended";

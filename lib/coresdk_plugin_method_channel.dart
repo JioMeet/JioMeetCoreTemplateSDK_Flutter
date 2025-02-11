@@ -25,6 +25,12 @@ class MethodChannelCoreSdkPlugin extends CoreSdkPluginPlatform {
   }
 
   @override
+  Future<String?> leaveMeeting() async {
+    return await methodChannel.invokeMethod<String>(
+        'leaveMeeting');
+  }
+
+  @override
   Future<String?> setEnvironment(String environment) async {
     final Map<String, dynamic> configParams = <String, dynamic>{
       'environmentName': environment

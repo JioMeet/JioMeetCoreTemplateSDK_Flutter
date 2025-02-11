@@ -56,6 +56,10 @@ class JMMeetingHandler: NSObject {
         }
     }
     
+    func leaveMeeting() {
+        self.jioMeetView.leaveMeeting()
+    }
+    
     func setScreenShareConfig (data: [String: Any]) {
         guard let config = data["screenShareConfig"] as? [String: Any] else { return }
         if let appGroupName = config["appGroupName"] as? String {
@@ -214,7 +218,10 @@ class JMMeetingHandler: NSObject {
 }
 
 extension JMMeetingHandler: JMMeetingViewDelegate {
-    
+    func didLocalUserJoinsMeeting() {
+        JioCoreSdkPlugin.channel.invokeMethod("meetingStarted", arguments: true)
+    }
+        
     func didLocalUserExitsMeetingView() {
         removeJioMeetView()
         JioCoreSdkPlugin.channel.invokeMethod("meetingEnded", arguments: true)

@@ -15,6 +15,8 @@ public class JioCoreSdkPlugin: NSObject, FlutterPlugin {
         switch call.method {
         case "launchMeetingCoreTemplateUi":
             loadTemplateSDK(data: arguments)
+        case "leaveMeeting":
+            leaveMeeting()
         case "setEnvironment":
             setEnvironment(data: arguments)
         case "setScreenShareConfig":
@@ -35,6 +37,10 @@ public class JioCoreSdkPlugin: NSObject, FlutterPlugin {
                 self.jmMeetigHandler.showJioMeetView(data: data)
             }
         }
+    }
+    
+    private func leaveMeeting() {
+        jmMeetigHandler.leaveMeeting()
     }
     
     private func setEnvironment(data: [String: Any]) {

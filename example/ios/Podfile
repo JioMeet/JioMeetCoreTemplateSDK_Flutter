@@ -35,7 +35,7 @@ target 'Runner' do
   
   target 'ScreenShareExtension' do
     inherit! :search_paths
-    pod 'JioMeetScreenShareSDK_iOS', '4.0.7'
+    pod 'JioMeetScreenShareSDK_iOS', '4.0.8'
     # Add specific pods for the extension if needed
   end
   target 'RunnerTests' do

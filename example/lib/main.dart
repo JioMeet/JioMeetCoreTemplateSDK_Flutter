@@ -38,9 +38,14 @@ class _MyAppState extends State<MyApp> {
 
   Future<void> coreSdkPluginCallbacks() async {
     platform.setMethodCallHandler((call) async {
+      if (call.method == "meetingStarted") {
+       setState(() {
+         _meetingStatus = "Started";
+        });
+      }
       if (call.method == "meetingEnded") {
         setState(() {
-          _meetingStatus = "Ended";
+         _meetingStatus = "Ended";
         });
       }
     });
