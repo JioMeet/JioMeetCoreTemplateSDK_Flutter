@@ -367,7 +367,7 @@ class _MyAppState extends State<MyApp> {
                     var meetingDetails = MeetingDetails(
                         meetingId: "meeting_id",                  // Meeting ID for identifying the meeting
                         meetingPin: "meeting_pin",                // Meeting PIN for joining the meeting
-                        displayName: "display_name",              // Display name should be minimum three characters and should not contain any special characters.
+                        displayName: "display_name",              // Display name should be minimum three characters and should not contain any special characters & spaces.
                         isInitialAudioOn: false,                  // Whether the initial audio should be on (default is false)
                         isInitialVideoOn: false,                  // Whether the initial video should be on (default is false)
                         hostToken: "hostToken"                    // Host token is required only if joining as a cohost
