@@ -363,7 +363,15 @@ class _MyAppState extends State<MyApp> {
               TextButton(
                 onPressed: () async {
                   try {
-                    var meetingDetails = MeetingDetails(meetingId: "meeting_id", meetingPin: "meeting_pin", displayName: "display_name", isInitialAudioOn: false, isInitialVideoOn: false, hostToken: "hostToken");
+                    // Pass host-token only when you want to join as a cohost.
+                    var meetingDetails = MeetingDetails(
+                        meetingId: "meeting_id",                  // Meeting ID for identifying the meeting
+                        meetingPin: "meeting_pin",                // Meeting PIN for joining the meeting
+                        displayName: "display_name",              // Display name should be minimum three characters and should not contain any special characters.
+                        isInitialAudioOn: false,                  // Whether the initial audio should be on (default is false)
+                        isInitialVideoOn: false,                  // Whether the initial video should be on (default is false)
+                        hostToken: "hostToken"                    // Host token is required only if joining as a cohost
+)
                     await _coresdkPlugin.launchMeetingCoreTemplateUi(meetingDetails);
                   } on PlatformException {
                     _meetingStatus = "error while joining";
