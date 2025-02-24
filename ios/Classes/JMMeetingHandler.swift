@@ -237,6 +237,15 @@ extension JMMeetingHandler: JMMeetingViewDelegate {
     
     func didRequestToBuildMeetingShareLink(meetingID: String, meetingPin: String, completion: @escaping ((String) -> Void)) {
     }
+    
+    func didRemoteUserJoinsMeeting(user: JMMeetingUserObj) {
+        JioCoreSdkPlugin.channel.invokeMethod("remoteUserJoinedMeeting", arguments: ["name": user.displayName, "userId": user.userId])
+    }
+    
+    func didRemoteUserLeftMeeting(user: JMMeetingUserObj) {
+        JioCoreSdkPlugin.channel.invokeMethod("remoteUserLeftMeeting", arguments: ["name": user.displayName, "userId": user.userId])
+    }
+    
 }
 
 

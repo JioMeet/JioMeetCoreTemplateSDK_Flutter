@@ -1,36 +1,36 @@
 PODS:
-  - coresdk_plugin (0.0.23):
+  - coresdk_plugin (0.0.24):
     - Flutter
-    - JioMeetChatUIKit_iOS (= 4.0.8)
-    - JioMeetParticipantPanelSDK_iOS (= 4.0.8)
-    - JioMeetReactions_iOS (= 4.0.8)
-    - JioMeetUIKit_iOS (= 4.0.8)
-    - JioMeetVBGUIKit_iOS (= 4.0.8)
+    - JioMeetChatUIKit_iOS (= 4.0.9)
+    - JioMeetParticipantPanelSDK_iOS (= 4.0.9)
+    - JioMeetReactions_iOS (= 4.0.9)
+    - JioMeetUIKit_iOS (= 4.0.9)
+    - JioMeetVBGUIKit_iOS (= 4.0.9)
   - Flutter (1.0.0)
   - integration_test (0.0.1):
     - Flutter
-  - JioMeetChatUIKit_iOS (4.0.8):
-    - JioMeetCoreSDK_iOS (= 4.0.8)
-    - JioMeetUIFoundation_iOS (= 4.0.8)
-  - JioMeetCoreSDK_iOS (4.0.8):
+  - JioMeetChatUIKit_iOS (4.0.9):
+    - JioMeetCoreSDK_iOS (= 4.0.9)
+    - JioMeetUIFoundation_iOS (= 4.0.9)
+  - JioMeetCoreSDK_iOS (4.0.9):
     - JMMediaStackSDK_iOS (= 1.0.8-alpha.10)
-  - JioMeetParticipantPanelSDK_iOS (4.0.8):
-    - JioMeetCoreSDK_iOS (= 4.0.8)
-    - JioMeetUIFoundation_iOS (= 4.0.8)
-  - JioMeetReactions_iOS (4.0.8):
-    - JioMeetCoreSDK_iOS (= 4.0.8)
-    - JioMeetUIFoundation_iOS (= 4.0.8)
+  - JioMeetParticipantPanelSDK_iOS (4.0.9):
+    - JioMeetCoreSDK_iOS (= 4.0.9)
+    - JioMeetUIFoundation_iOS (= 4.0.9)
+  - JioMeetReactions_iOS (4.0.9):
+    - JioMeetCoreSDK_iOS (= 4.0.9)
+    - JioMeetUIFoundation_iOS (= 4.0.9)
     - lottie-ios (~> 4.3)
-  - JioMeetScreenShareSDK_iOS (4.0.8):
+  - JioMeetScreenShareSDK_iOS (4.0.9):
     - JMMediaStackSDK_iOS (= 1.0.8-alpha.10)
-  - JioMeetUIFoundation_iOS (4.0.8):
-    - JioMeetCoreSDK_iOS (= 4.0.8)
-  - JioMeetUIKit_iOS (4.0.8):
-    - JioMeetCoreSDK_iOS (= 4.0.8)
-    - JioMeetUIFoundation_iOS (= 4.0.8)
-  - JioMeetVBGUIKit_iOS (4.0.8):
-    - JioMeetCoreSDK_iOS (= 4.0.8)
-    - JioMeetUIFoundation_iOS (= 4.0.8)
+  - JioMeetUIFoundation_iOS (4.0.9):
+    - JioMeetCoreSDK_iOS (= 4.0.9)
+  - JioMeetUIKit_iOS (4.0.9):
+    - JioMeetCoreSDK_iOS (= 4.0.9)
+    - JioMeetUIFoundation_iOS (= 4.0.9)
+  - JioMeetVBGUIKit_iOS (4.0.9):
+    - JioMeetCoreSDK_iOS (= 4.0.9)
+    - JioMeetUIFoundation_iOS (= 4.0.9)
   - JMMediaStackSDK_iOS (1.0.8-alpha.10):
     - JMMediaWebRtc_iOS (= 1.0.0)
     - JMMMWormhole (~> 3.0.0)
@@ -53,7 +53,7 @@ DEPENDENCIES:
   - coresdk_plugin (from `.symlinks/plugins/coresdk_plugin/ios`)
   - Flutter (from `Flutter`)
   - integration_test (from `.symlinks/plugins/integration_test/ios`)
-  - JioMeetScreenShareSDK_iOS (= 4.0.8)
+  - JioMeetScreenShareSDK_iOS (= 4.0.9)
 
 SPEC REPOS:
   trunk:
@@ -83,17 +83,17 @@ EXTERNAL SOURCES:
     :path: ".symlinks/plugins/integration_test/ios"
 
 SPEC CHECKSUMS:
-  coresdk_plugin: 8c49159ec534441239d48d3c7a26268996d70dc4
+  coresdk_plugin: d762c541832b25516b4bea1a4496f5409a753665
   Flutter: e0871f40cf51350855a761d2e70bf5af5b9b5de7
   integration_test: 252f60fa39af5e17c3aa9899d35d908a0721b573
-  JioMeetChatUIKit_iOS: 3edda32a9dca6710937cc59f7ffaa01829b6620f
-  JioMeetCoreSDK_iOS: aa7976c1cc2023aa86ecfa15e64355f8cd6325c4
-  JioMeetParticipantPanelSDK_iOS: 50c4f98010b4565bbfedf4b56e5cd9f1d0633115
-  JioMeetReactions_iOS: a73a43484dcd3a2db939888ff31aa5f253413377
-  JioMeetScreenShareSDK_iOS: 943fb4b3afb026957937df59a3ec8f333444506a
-  JioMeetUIFoundation_iOS: e3966f93dda73f6900464aa9d05eba5e25c03138
-  JioMeetUIKit_iOS: 010dad92dff80bad2918531563acea2ece39f1e2
-  JioMeetVBGUIKit_iOS: 7b78e1ddca5e941819c1bae35fff579cbaf038b7
+  JioMeetChatUIKit_iOS: 3f579647e094f43f90d7657c5c337f79e127282e
+  JioMeetCoreSDK_iOS: f57138d17b38ce187169c8e9d79da64e4bd71558
+  JioMeetParticipantPanelSDK_iOS: 8ed66818505f85d1413579947cd3e54ed7e0a7bb
+  JioMeetReactions_iOS: 269f02b1246404bdb53fb5baa1f0a32153d2791e
+  JioMeetScreenShareSDK_iOS: eaa5aab10c2edd772dc8bf7c1858e4824891a306
+  JioMeetUIFoundation_iOS: d0d385a3bc72129000334b222ccff2fde5b03d24
+  JioMeetUIKit_iOS: b191384fa628c0f23b81d48927e46e807c27f8aa
+  JioMeetVBGUIKit_iOS: e37dc0c6649c660934cdf9c3d2fb5b186264de36
   JMMediaStackSDK_iOS: 3c5fd93b159d5ad21c2e261fea36843edfd18620
   JMMediaWebRtc_iOS: 48ef2f41b17ca0d7eb7943c9cdc2cf4e32569855
   JMMMWormhole: 5f606b08c3e68c95c8d1e039b98f71f57b1e938a
@@ -103,6 +103,6 @@ SPEC CHECKSUMS:
   Starscream: 19b5533ddb925208db698f0ac508a100b884a1b9
   SwiftyJSON: f5b1bf1cd8dd53cd25887ac0eabcfd92301c6a5a
 
-PODFILE CHECKSUM: 2aedb4197220dbfde7e1b1432bf425440866cfce
+PODFILE CHECKSUM: 8ebe282f8875c92ac21c71892ebf2e17a1a70f2f
 
 COCOAPODS: 1.16.2

@@ -43,10 +43,23 @@ class _MyAppState extends State<MyApp> {
          _meetingStatus = "Started";
         });
       }
+      
       if (call.method == "meetingEnded") {
-        setState(() {
-         _meetingStatus = "Ended";
-        });
+        print("Meeting Ended");
+      }
+
+      if (call.method == "remoteUserJoinedMeeting") {
+        Map<dynamic, dynamic> data = call.arguments; // Extract the dictionary
+        String? name = data["name"];
+        String? userId = data["userId"];
+        print( "Remote user joined: $name $userId");
+      }
+
+      if (call.method == "remoteUserLeftMeeting") {
+        Map<dynamic, dynamic> data = call.arguments; // Extract the dictionary
+        String? name = data["name"];
+        String? userId = data["userId"];
+        print( "Remote user left: $name $userId");
       }
     });
     var config = SetCoreSdkConfig(enableFlipCamera: true, isMoreFeaturesEnabled:true, isShareEnabled: true);

@@ -50,7 +50,7 @@ You need to  add the necessary configurations to your   project's `pubspec.yaml`
    coresdk_plugin:
       git:
          url: https://github.com/JioMeet/JioMeetCoreTemplateSDK_Flutter.git
-         ref: 0.0.23
+         ref: 0.0.24
 ```
 
 ### Android:
@@ -279,16 +279,28 @@ void initState() {
 
 Future<void> coreSdkPluginCallbacks() async {
   platform.setMethodCallHandler((call) async {
-   if (call.method == "meetingStarted") {
-       setState(() {
-         _meetingStatus = "Started";
+    if (call.method == "meetingStarted") {
+        setState(() {
+            _meetingStatus = "Started";
         });
     }
-    
+      
     if (call.method == "meetingEnded") {
-      setState(() {
-        _meetingStatus = "Ended";
-      });
+        print("Meeting Ended");
+    }
+
+    if (call.method == "remoteUserJoinedMeeting") {
+        Map<dynamic, dynamic> data = call.arguments; // Extract the dictionary
+        String? name = data["name"];
+        String? userId = data["userId"];
+        print( "Remote user joined: $name $userId");
+    }
+
+    if (call.method == "remoteUserLeftMeeting") {
+        Map<dynamic, dynamic> data = call.arguments; // Extract the dictionary
+        String? name = data["name"];
+        String? userId = data["userId"];
+        print( "Remote user left: $name $userId");
     }
   });
 }
@@ -333,17 +345,29 @@ class _MyAppState extends State<MyApp> {
 
   Future<void> coreSdkPluginCallbacks() async {
     platform.setMethodCallHandler((call) async {
-      if (call.method == "meetingStarted") {
-       setState(() {
-         _meetingStatus = "Started";
-        });
-      }
-      
-      if (call.method == "meetingEnded") {
-        setState(() {
-          _meetingStatus = "Ended";
-        });
-      }
+        if (call.method == "meetingStarted") {
+            setState(() {
+                _meetingStatus = "Started";
+            });
+        }
+          
+        if (call.method == "meetingEnded") {
+            print("Meeting Ended");
+        }
+
+        if (call.method == "remoteUserJoinedMeeting") {
+            Map<dynamic, dynamic> data = call.arguments; // Extract the dictionary
+            String? name = data["name"];
+            String? userId = data["userId"];
+            print( "Remote user joined: $name $userId");
+        }
+
+        if (call.method == "remoteUserLeftMeeting") {
+            Map<dynamic, dynamic> data = call.arguments; // Extract the dictionary
+            String? name = data["name"];
+            String? userId = data["userId"];
+            print( "Remote user left: $name $userId");
+        }
     });
   }
 

@@ -2,9 +2,10 @@
 # To learn more about a Podspec see http://guides.cocoapods.org/syntax/podspec.html.
 # Run `pod lib lint coresdk_plugin.podspec` to validate before publishing.
 #
+specVersion = '4.0.9'
 Pod::Spec.new do |s|
   s.name             = 'coresdk_plugin'
-  s.version          = '0.0.23'
+  s.version          = '0.0.24'
   s.summary          = 'A new Flutter plugin project.'
   s.description      = <<-DESC
 A new Flutter plugin project.
@@ -15,11 +16,11 @@ A new Flutter plugin project.
   s.source           = { :path => '.' }
   s.source_files = 'Classes/**/*'
   s.dependency 'Flutter'
-  s.dependency 'JioMeetUIKit_iOS', '4.0.8'
-  s.dependency 'JioMeetParticipantPanelSDK_iOS', '4.0.8'
-  s.dependency 'JioMeetChatUIKit_iOS', '4.0.8'
-  s.dependency 'JioMeetVBGUIKit_iOS', '4.0.8'
-  s.dependency 'JioMeetReactions_iOS', '4.0.8'
+  s.dependency 'JioMeetUIKit_iOS', specVersion
+  s.dependency 'JioMeetParticipantPanelSDK_iOS', specVersion
+  s.dependency 'JioMeetChatUIKit_iOS', specVersion
+  s.dependency 'JioMeetVBGUIKit_iOS', specVersion
+  s.dependency 'JioMeetReactions_iOS', specVersion
   s.platform = :ios, '11.0'
 
   # Flutter.framework does not contain a i386 slice.
