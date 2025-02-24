@@ -32,6 +32,24 @@ class LaunchMeetingCoreTemplateUIActivity : ComponentActivity() {
 
         }
 
+        override fun onRemoteUserLeftMeeting(jmMeetingUser: JMMeetingUser) {
+            super.onRemoteUserLeftMeeting(jmMeetingUser)
+            JioCoreSdkPlugin.channel.invokeMethod(
+                "remoteUserLeftMeeting",
+                mapOf<String, Any?>("name" to jmMeetingUser.displayName, "userId" to jmMeetingUser.userId)
+            )
+            Log.d("Listener onRemoteUserLeftMeeting", "$jmMeetingUser")
+        }
+
+        override fun onRemoteParticipantJoined(jmMeetingUser: JMMeetingUser) {
+            super.onRemoteParticipantJoined(jmMeetingUser)
+            JioCoreSdkPlugin.channel.invokeMethod(
+                "remoteUserJoinedMeeting",
+                mapOf<String, Any?>("name" to jmMeetingUser.displayName, "userId" to jmMeetingUser.userId)
+            )
+            Log.d("Listener onRemoteParticipantJoined", "$jmMeetingUser")
+        }
+
 
     }
 

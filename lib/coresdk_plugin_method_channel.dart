@@ -6,6 +6,7 @@ import 'package:flutter/services.dart';
 
 import 'coresdk_plugin_platform_interface.dart';
 import 'meeting_details.dart';
+import 'dart:convert';
 
 /// An implementation of [CoreSdkPluginPlatform] that uses method channels.
 class MethodChannelCoreSdkPlugin extends CoreSdkPluginPlatform {
@@ -15,10 +16,10 @@ class MethodChannelCoreSdkPlugin extends CoreSdkPluginPlatform {
 
   @override
   Future<String?> launchMeetingCoreTemplateUi(MeetingDetails meeting_details) async {
-      final Map<String, dynamic> meeting_details_json = <String, dynamic>{
-      'meeting_details': meeting_details.toJson(),
-    };
 
+      final Map<String, dynamic> meeting_details_json = <String, dynamic>{
+      'meeting_details': jsonEncode(meeting_details.toJson()),
+    };
 
     return await methodChannel.invokeMethod<String>(
         'launchMeetingCoreTemplateUi',meeting_details_json);
