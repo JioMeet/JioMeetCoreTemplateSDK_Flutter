@@ -16,7 +16,7 @@ class JMMeetingHandler: NSObject {
     private var jwToken = ""
     private var userID = ""
     func showJioMeetView(data: [String: Any]) {
-        guard let meeting_details = data["meeting_details"] as? [String: Any] else { return }
+        guard let meeting_details = self.getMeetingDetails(data: data) else { return }
         DispatchQueue.main.async {
             if let topVC = UIApplication.getTopViewController() {
                 self.jioMeetView = JMMeetingView()
@@ -54,6 +54,18 @@ class JMMeetingHandler: NSObject {
                     delegate: self)
             }
         }
+    }
+    
+    func getMeetingDetails(data: [String: Any]) -> [String: Any]? {
+        guard let jsonString = data["meeting_details"] as? String else { return nil }
+        guard let jsonData = jsonString.data(using: .utf8) else { return nil }
+        do {
+            guard let jsonDict = try JSONSerialization.jsonObject(with: jsonData, options: []) as? [String: Any]  else { return nil }
+            return jsonDict
+        } catch {
+            print("Failed to convert JSON string to dictionary: \(error.localizedDescription)")
+        }
+        return nil
     }
     
     func leaveMeeting() {
