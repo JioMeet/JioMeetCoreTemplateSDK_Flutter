@@ -1,5 +1,5 @@
 PODS:
-  - coresdk_plugin (0.0.24):
+  - coresdk_plugin (0.0.25):
     - Flutter
     - JioMeetChatUIKit_iOS (= 4.0.9)
     - JioMeetParticipantPanelSDK_iOS (= 4.0.9)
@@ -83,7 +83,7 @@ EXTERNAL SOURCES:
     :path: ".symlinks/plugins/integration_test/ios"
 
 SPEC CHECKSUMS:
-  coresdk_plugin: d762c541832b25516b4bea1a4496f5409a753665
+  coresdk_plugin: 8fce47ec7e917911cbbbcf5f9fdbafbd56bb2533
   Flutter: e0871f40cf51350855a761d2e70bf5af5b9b5de7
   integration_test: 252f60fa39af5e17c3aa9899d35d908a0721b573
   JioMeetChatUIKit_iOS: 3f579647e094f43f90d7657c5c337f79e127282e
