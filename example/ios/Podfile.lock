@@ -1,5 +1,5 @@
 PODS:
-  - coresdk_plugin (0.0.25):
+  - coresdk_plugin (0.0.26):
     - Flutter
     - JioMeetChatUIKit_iOS (= 4.0.9)
     - JioMeetParticipantPanelSDK_iOS (= 4.0.9)
