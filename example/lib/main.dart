@@ -45,7 +45,9 @@ class _MyAppState extends State<MyApp> {
       }
       
       if (call.method == "meetingEnded") {
-        print("Meeting Ended");
+        setState(() {
+          _meetingStatus = "Ended";
+        });
       }
 
       if (call.method == "remoteUserJoinedMeeting") {
