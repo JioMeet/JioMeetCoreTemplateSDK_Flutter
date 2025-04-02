@@ -3,11 +3,31 @@ import UIKit
 
 public class JioCoreSdkPlugin: NSObject, FlutterPlugin {
     let jmMeetigHandler = JMMeetingHandler()
-    static var channel = FlutterMethodChannel()
+    private static var channel = FlutterMethodChannel()
+    static var eventChannel = FlutterEventChannel()
+    static var eventSink: FlutterEventSink?
     public static func register(with registrar: FlutterPluginRegistrar) {
         channel = FlutterMethodChannel(name: "coresdk_plugin", binaryMessenger: registrar.messenger())
+        
+        eventChannel = FlutterEventChannel(name: "coresdk_plugin_events", binaryMessenger: registrar.messenger())
+        eventChannel.setStreamHandler(EventStreamHandler())
+
         let instance = JioCoreSdkPlugin()
         registrar.addMethodCallDelegate(instance, channel: channel)
+        
+    }
+    
+    
+    private class EventStreamHandler: NSObject, FlutterStreamHandler {
+        func onListen(withArguments arguments: Any?, eventSink: @escaping FlutterEventSink) -> FlutterError? {
+            JioCoreSdkPlugin.eventSink = eventSink
+            return nil
+        }
+
+        func onCancel(withArguments arguments: Any?) -> FlutterError? {
+            JioCoreSdkPlugin.eventSink = nil
+            return nil
+        }
     }
     
     public func handle(_ call: FlutterMethodCall, result: @escaping FlutterResult) {

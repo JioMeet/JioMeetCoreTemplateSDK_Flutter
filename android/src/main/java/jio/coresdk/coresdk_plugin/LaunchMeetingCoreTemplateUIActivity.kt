@@ -18,13 +18,13 @@ import org.jio.sdk.templates.core.LaunchCore
 class LaunchMeetingCoreTemplateUIActivity : ComponentActivity() {
     private val jioMeetConnectionListener = object : JioMeetConnectionListener {
         override fun onLeaveMeeting() {
-            JioCoreSdkPlugin.channel.invokeMethod("meetingEnded",  true)
-             finish()
+            JioCoreSdkPlugin.eventSink?.success("meetingEnded")
+            finish()
         }
 
         override fun onLocalJoinedRoom(jmMeetingUser: JMMeetingUser) {
             super.onLocalJoinedRoom(jmMeetingUser)
-            JioCoreSdkPlugin.channel.invokeMethod("meetingStarted",  true)
+            JioCoreSdkPlugin.eventSink?.success("meetingStarted")
             Log.d("Listener onLocalJoinedRoom", "UID: 0 $jmMeetingUser")
         }
 
@@ -34,18 +34,24 @@ class LaunchMeetingCoreTemplateUIActivity : ComponentActivity() {
 
         override fun onRemoteUserLeftMeeting(jmMeetingUser: JMMeetingUser) {
             super.onRemoteUserLeftMeeting(jmMeetingUser)
-            JioCoreSdkPlugin.channel.invokeMethod(
-                "remoteUserLeftMeeting",
-                mapOf<String, Any?>("name" to jmMeetingUser.displayName, "userId" to jmMeetingUser.userId)
+            JioCoreSdkPlugin.eventSink?.success(
+                mapOf(
+                    "event" to "remoteUserLeftMeeting",
+                    "name" to jmMeetingUser.displayName,
+                    "userId" to jmMeetingUser.userId
+                )
             )
             Log.d("Listener onRemoteUserLeftMeeting", "$jmMeetingUser")
         }
 
         override fun onRemoteParticipantJoined(jmMeetingUser: JMMeetingUser) {
             super.onRemoteParticipantJoined(jmMeetingUser)
-            JioCoreSdkPlugin.channel.invokeMethod(
-                "remoteUserJoinedMeeting",
-                mapOf<String, Any?>("name" to jmMeetingUser.displayName, "userId" to jmMeetingUser.userId)
+            JioCoreSdkPlugin.eventSink?.success(
+                mapOf(
+                    "event" to "remoteUserJoinedMeeting",
+                    "name" to jmMeetingUser.displayName,
+                    "userId" to jmMeetingUser.userId
+                )
             )
             Log.d("Listener onRemoteParticipantJoined", "$jmMeetingUser")
         }

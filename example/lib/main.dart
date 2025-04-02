@@ -22,7 +22,7 @@ class MyApp extends StatefulWidget {
 
 class _MyAppState extends State<MyApp> {
   final _coresdkPlugin = JioCoreSdkPlugin();
-  static const platform = MethodChannel('coresdk_plugin');
+  static const eventChannel = EventChannel('coresdk_plugin_events');
   String _meetingStatus = 'Not started';
 
   @override
@@ -37,31 +37,31 @@ class _MyAppState extends State<MyApp> {
   }
 
   Future<void> coreSdkPluginCallbacks() async {
-    platform.setMethodCallHandler((call) async {
-      if (call.method == "meetingStarted") {
+    eventChannel.receiveBroadcastStream().listen((event) {
+      if (event == "meetingStarted") {
        setState(() {
          _meetingStatus = "Started";
         });
       }
       
-      if (call.method == "meetingEnded") {
+      if (event == "meetingEnded") {
         setState(() {
           _meetingStatus = "Ended";
         });
       }
 
-      if (call.method == "remoteUserJoinedMeeting") {
-        Map<dynamic, dynamic> data = call.arguments; // Extract the dictionary
-        String? name = data["name"];
-        String? userId = data["userId"];
-        print( "Remote user joined: $name $userId");
-      }
+      if (event is Map) {
+        String? eventType = event["event"];
+        String? name = event["name"];
+        String? userId = event["userId"];
 
-      if (call.method == "remoteUserLeftMeeting") {
-        Map<dynamic, dynamic> data = call.arguments; // Extract the dictionary
-        String? name = data["name"];
-        String? userId = data["userId"];
-        print( "Remote user left: $name $userId");
+        if (eventType == "remoteUserJoinedMeeting") {
+          print( "Remote user joined: $name $userId");
+        }
+
+        if (eventType == "remoteUserLeftMeeting") {
+          print( "Remote user left: $name $userId");
+        }
       }
     });
     var config = SetCoreSdkConfig(enableFlipCamera: true, isMoreFeaturesEnabled:true, isShareEnabled: true);

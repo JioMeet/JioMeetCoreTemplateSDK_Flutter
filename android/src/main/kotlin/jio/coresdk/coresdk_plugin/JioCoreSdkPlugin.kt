@@ -11,6 +11,8 @@ import io.flutter.plugin.common.MethodChannel.MethodCallHandler
 import io.flutter.plugin.common.MethodChannel.Result
 import com.jiomeet.core.utils.BaseUrl
 import com.jiomeet.core.CoreApplication
+import io.flutter.plugin.common.EventChannel
+import org.jio.sdk.common.utilities.Log
 import org.jio.sdk.config.JioMeetCoreTemplateUiConfig
 import org.json.JSONObject
 import org.jio.sdk.sdkmanager.JioMeetSdkManager
@@ -22,11 +24,24 @@ class JioCoreSdkPlugin : FlutterPlugin, MethodCallHandler {
     private lateinit var context: Context
 
     companion object {
-        lateinit var channel: MethodChannel
+        private lateinit var channel: MethodChannel
+        lateinit var eventChannel: EventChannel
+        var eventSink: EventChannel.EventSink? = null
     }
 
     override fun onAttachedToEngine(flutterPluginBinding: FlutterPlugin.FlutterPluginBinding) {
         context = flutterPluginBinding.applicationContext
+
+        eventChannel = EventChannel(flutterPluginBinding.binaryMessenger, "coresdk_plugin_events")
+        eventChannel.setStreamHandler(object : EventChannel.StreamHandler {
+            override fun onListen(arguments: Any?, sink: EventChannel.EventSink?) {
+                eventSink = sink
+            }
+            override fun onCancel(arguments: Any?) {
+                eventSink = null
+            }
+        })
+
         channel = MethodChannel(flutterPluginBinding.binaryMessenger, "coresdk_plugin")
         channel.setMethodCallHandler(this)
     }
@@ -132,6 +147,8 @@ class JioCoreSdkPlugin : FlutterPlugin, MethodCallHandler {
 
     override fun onDetachedFromEngine(binding: FlutterPlugin.FlutterPluginBinding) {
         channel.setMethodCallHandler(null)
+        eventChannel.setStreamHandler(null)
+        eventSink = null
     }
 
     private fun launchNativeActivity(bundle: Bundle) {

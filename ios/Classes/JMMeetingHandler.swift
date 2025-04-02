@@ -231,12 +231,12 @@ class JMMeetingHandler: NSObject {
 
 extension JMMeetingHandler: JMMeetingViewDelegate {
     func didLocalUserJoinsMeeting() {
-        JioCoreSdkPlugin.channel.invokeMethod("meetingStarted", arguments: true)
+        JioCoreSdkPlugin.eventSink?("meetingStarted")
     }
         
     func didLocalUserExitsMeetingView() {
         removeJioMeetView()
-        JioCoreSdkPlugin.channel.invokeMethod("meetingEnded", arguments: true)
+        JioCoreSdkPlugin.eventSink?("meetingEnded")
     }
     
     func didLocalUserFailedToJoinMeeting(errorMessage: String) {
@@ -251,11 +251,20 @@ extension JMMeetingHandler: JMMeetingViewDelegate {
     }
     
     func didRemoteUserJoinsMeeting(user: JMMeetingUserObj) {
-        JioCoreSdkPlugin.channel.invokeMethod("remoteUserJoinedMeeting", arguments: ["name": user.displayName, "userId": user.userId])
-    }
+        
+        JioCoreSdkPlugin.eventSink?([
+            "event": "remoteUserJoinedMeeting",
+            "name": user.displayName,
+            "userId": user.userId
+        ])
+            }
     
     func didRemoteUserLeftMeeting(user: JMMeetingUserObj) {
-        JioCoreSdkPlugin.channel.invokeMethod("remoteUserLeftMeeting", arguments: ["name": user.displayName, "userId": user.userId])
+        JioCoreSdkPlugin.eventSink?([
+            "event": "remoteUserLeftMeeting",
+            "name": user.displayName,
+            "userId": user.userId
+        ])
     }
     
 }
