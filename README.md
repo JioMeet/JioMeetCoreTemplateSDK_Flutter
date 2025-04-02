@@ -264,9 +264,9 @@ _coresdkPlugin.leaveMeeting()
 
 #### Callbacks from plugin:
 
-1 - Register methodchannel
+1 - Register EventChannel
 ```dart
-static const platform = MethodChannel('coresdk_plugin');
+static const eventChannel = EventChannel('coresdk_plugin_events');
 ```
 
 2
@@ -278,29 +278,29 @@ void initState() {
 }
 
 Future<void> coreSdkPluginCallbacks() async {
-  platform.setMethodCallHandler((call) async {
-    if (call.method == "meetingStarted") {
+ eventChannel.receiveBroadcastStream().listen((event) {
+    if (event == "meetingStarted") {
         setState(() {
             _meetingStatus = "Started";
         });
     }
       
-    if (call.method == "meetingEnded") {
+    if (event == "meetingEnded") {
         print("Meeting Ended");
     }
 
-    if (call.method == "remoteUserJoinedMeeting") {
-        Map<dynamic, dynamic> data = call.arguments; // Extract the dictionary
-        String? name = data["name"];
-        String? userId = data["userId"];
-        print( "Remote user joined: $name $userId");
-    }
+    if (event is Map) {
+        String? eventType = event["event"];
+        String? name = event["name"];
+        String? userId = event["userId"];
 
-    if (call.method == "remoteUserLeftMeeting") {
-        Map<dynamic, dynamic> data = call.arguments; // Extract the dictionary
-        String? name = data["name"];
-        String? userId = data["userId"];
-        print( "Remote user left: $name $userId");
+        if (eventType == "remoteUserJoinedMeeting") {
+          print( "Remote user joined: $name $userId");
+        }
+
+        if (eventType == "remoteUserLeftMeeting") {
+          print( "Remote user left: $name $userId");
+        }
     }
   });
 }
@@ -344,30 +344,30 @@ class _MyAppState extends State<MyApp> {
   }
 
   Future<void> coreSdkPluginCallbacks() async {
-    platform.setMethodCallHandler((call) async {
-        if (call.method == "meetingStarted") {
+    eventChannel.receiveBroadcastStream().listen((event) {
+        if (event == "meetingStarted") {
             setState(() {
                 _meetingStatus = "Started";
             });
         }
           
-        if (call.method == "meetingEnded") {
+        if (event == "meetingEnded") {
             print("Meeting Ended");
         }
 
-        if (call.method == "remoteUserJoinedMeeting") {
-            Map<dynamic, dynamic> data = call.arguments; // Extract the dictionary
-            String? name = data["name"];
-            String? userId = data["userId"];
-            print( "Remote user joined: $name $userId");
-        }
+        if (event is Map) {
+            String? eventType = event["event"];
+            String? name = event["name"];
+            String? userId = event["userId"];
 
-        if (call.method == "remoteUserLeftMeeting") {
-            Map<dynamic, dynamic> data = call.arguments; // Extract the dictionary
-            String? name = data["name"];
-            String? userId = data["userId"];
-            print( "Remote user left: $name $userId");
-        }
+            if (eventType == "remoteUserJoinedMeeting") {
+                print( "Remote user joined: $name $userId");
+            }
+
+            if (eventType == "remoteUserLeftMeeting") {
+                print( "Remote user left: $name $userId");
+            }
+      }
     });
   }
 
