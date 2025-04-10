@@ -111,6 +111,50 @@ Add the following block of code to the **project-level** `build.gradle` file (no
   
    ```
 
+### Step 3: Add ProGuard Rules for Release Builds
+To ensure proper code optimization and obfuscation while keeping necessary classes intact, add the following rules to your ProGuard configuration file (proguard-rules.pro):
+
+```txt
+-dontwarn kotlinx.android.parcel.Parcelize
+-dontwarn kotlinx.parcelize.Parcelize
+
+# Keep all classes with Gson annotations
+-keep class * { @com.google.gson.annotations.SerializedName *; }
+
+# Keep Gson InstanceCreator implementations
+-keep class * implements com.google.gson.InstanceCreator { *; }
+
+# Keep classes used by reflection
+-keepattributes Signature
+-keepattributes *Annotation*
+
+-dontwarn com.google.android.play.core.splitcompat.SplitCompatApplication
+-dontwarn com.google.android.play.core.splitinstall.SplitInstallManager
+-dontwarn com.google.android.play.core.splitinstall.SplitInstallRequest$Builder
+-dontwarn com.google.android.play.core.splitinstall.SplitInstallRequest
+-dontwarn com.google.android.play.core.splitinstall.SplitInstallStateUpdatedListener
+-dontwarn com.google.android.play.core.tasks.OnFailureListener
+-dontwarn com.google.android.play.core.tasks.OnSuccessListener
+-dontwarn com.google.android.play.core.tasks.Task
+
+# Keep the MeetingDetails object inside the Constants class
+-keep class jio.coresdk.coresdk_plugin.Constants$MeetingDetails { *; }
+
+-keep class jio.coresdk.coresdk_plugin.Constants { *; }
+# Keep the MeetingDetails class and its fields
+-keep class jio.coresdk.coresdk_plugin.MeetingDetails { *; }
+
+
+# Keep all methods using Gson serialization/deserialization
+-keep class com.google.gson.** { *; }
+
+# Prevent obfuscation of Gson model classes
+-keepclassmembers class jio.coresdk.coresdk_plugin.MeetingDetails {
+    public <init>(...);
+    public *;
+}
+``` 
+
 #### Resolving Android Manifest Issues
 If you encounter errors related to the `android:name` attribute in the `AndroidManifest.xml` (such as conflicts between libraries or SDKs), add the following line inside the `<application>` tag in your `app/src/main/AndroidManifest.xml`:
 
