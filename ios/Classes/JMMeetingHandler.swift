@@ -136,6 +136,12 @@ class JMMeetingHandler: NSObject {
         if let reactionEnable = config["isReactionEnabled"] as? Bool {
             JMUIKit.isReactionsEnabled = reactionEnable
         }
+        if let isVideoFeatureEnabled = config["isVideoFeatureEnabled"] as? Bool {
+            JMUIKit.isVideoFeatureEnabled = isVideoFeatureEnabled
+        }
+        if let isSpotlightFeatureEnabled = config["isSpotlightFeatureEnabled"] as? Bool {
+            JMUIKit.isSpotlightFeatureEnabled = isSpotlightFeatureEnabled
+        }
         JMUIKit.showThankYouScreen = false
     }
     

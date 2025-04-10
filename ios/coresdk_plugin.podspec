@@ -2,10 +2,10 @@
 # To learn more about a Podspec see http://guides.cocoapods.org/syntax/podspec.html.
 # Run `pod lib lint coresdk_plugin.podspec` to validate before publishing.
 #
-specVersion = '4.0.9'
+specVersion = '4.1.0'
 Pod::Spec.new do |s|
   s.name             = 'coresdk_plugin'
-  s.version          = '0.0.27'
+  s.version          = '0.0.28'
   s.summary          = 'A new Flutter plugin project.'
   s.description      = <<-DESC
 A new Flutter plugin project.
