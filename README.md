@@ -191,6 +191,20 @@ Please add below permissions keys to your `Info.plist` file with proper descript
 
 Please enable `Background Modes` in your project `Signing & Capibilities` tab. After enabling please check box with option `Audio, Airplay, and Pictures in Pictures`. If you don't enables this setting, your mic will be muted when your app goes to background.
 
+### Important
+
+Note: Please add below post install script in podfile before installing pods
+
+post_install do |installer|
+  installer.pods_project.targets.each do |target|
+    flutter_additional_ios_build_settings(target)
+    target.build_configurations.each do |config|
+      config.build_settings['BUILD_LIBRARY_FOR_DISTRIBUTION'] = 'YES'
+    end
+  end
+end
+
+
 #### Screen Share Integration
 
 
