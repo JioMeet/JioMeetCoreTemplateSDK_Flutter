@@ -195,6 +195,7 @@ Please enable `Background Modes` in your project `Signing & Capibilities` tab. A
 
 Note: Please add below post install script in podfile before installing pods
 
+```swift
 post_install do |installer|
   installer.pods_project.targets.each do |target|
     flutter_additional_ios_build_settings(target)
@@ -203,7 +204,7 @@ post_install do |installer|
     end
   end
 end
-
+```
 
 #### Screen Share Integration
 
