@@ -14,6 +14,7 @@ class SetCoreSdkConfig {
   bool showMeetingTimer = false;
   bool isReactionEnabled = false;
   bool isVideoFeatureEnabled = true;
+  bool isRecordingLabelEnabled = true;
   bool isSpotlightFeatureEnabled = false;
 
 
@@ -33,6 +34,7 @@ class SetCoreSdkConfig {
       this.showMeetingTimer = false,
       this.isReactionEnabled = false,
       this.isVideoFeatureEnabled = true,
+      this.isRecordingLabelEnabled = true,
       this.isSpotlightFeatureEnabled = false
       });
 
@@ -53,6 +55,7 @@ class SetCoreSdkConfig {
       'showMeetingTimer': showMeetingTimer,
       'isReactionEnabled': isReactionEnabled,
       'isVideoFeatureEnabled': isVideoFeatureEnabled,
+      'isRecordingLabelEnabled': isRecordingLabelEnabled,
       'isSpotlightFeatureEnabled': isSpotlightFeatureEnabled
     };
   }

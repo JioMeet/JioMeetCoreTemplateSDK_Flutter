@@ -139,6 +139,9 @@ class JMMeetingHandler: NSObject {
         if let isVideoFeatureEnabled = config["isVideoFeatureEnabled"] as? Bool {
             JMUIKit.isVideoFeatureEnabled = isVideoFeatureEnabled
         }
+        if let isRecordingLabelEnabled = config["isRecordingLabelEnabled"] as? Bool {
+            JMUIKit.isRecordingLabelEnabled = isRecordingLabelEnabled
+        }
         if let isSpotlightFeatureEnabled = config["isSpotlightFeatureEnabled"] as? Bool {
             JMUIKit.isSpotlightFeatureEnabled = isSpotlightFeatureEnabled
         }
