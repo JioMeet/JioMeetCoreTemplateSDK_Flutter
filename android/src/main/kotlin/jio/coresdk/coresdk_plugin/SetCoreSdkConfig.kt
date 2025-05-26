@@ -16,7 +16,9 @@ data class SetCoreSdkConfig(
     var showAudioOptions: Boolean,
     var showMeetingInfo: Boolean,
     var showMeetingTimer: Boolean,
-    var isReactionEnabled: Boolean
+    var isReactionEnabled: Boolean,
+    var isVideoFeatureEnabled: Boolean,
+    var isRecordingLabelEnabled: Boolean
 ) {
     fun toJsonString(): String {
         return Gson().toJson(this, SetCoreSdkConfig::class.java)

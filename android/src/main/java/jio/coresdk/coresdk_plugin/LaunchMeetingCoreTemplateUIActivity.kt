@@ -66,18 +66,26 @@ class LaunchMeetingCoreTemplateUIActivity : ComponentActivity() {
         if (isGranted) {
             openMeetingCoreTemplateUI()
         } else {
-            Toast.makeText(applicationContext, getString(R.string.permission_message),Toast.LENGTH_SHORT).show()
+            Toast.makeText(
+                applicationContext,
+                getString(R.string.permission_message),
+                Toast.LENGTH_SHORT
+            ).show()
         }
     }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         if (!HelperClass.isInternetAvailable(this)) {
-            Toast.makeText(applicationContext, getString(R.string.internet_message),Toast.LENGTH_SHORT).show()
+            Toast.makeText(
+                applicationContext,
+                getString(R.string.internet_message),
+                Toast.LENGTH_SHORT
+            ).show()
             finish()
         } else if (HelperClass.checkPermission(this)) {
             openMeetingCoreTemplateUI()
-        } else{
+        } else {
             requestPermissionLauncher.launch(PermissionConstant.requiredPermissions)
         }
     }
@@ -100,10 +108,10 @@ class LaunchMeetingCoreTemplateUIActivity : ComponentActivity() {
             deviceId = ""
 
         )
-         val jmJoinMeetingConfig = JMJoinMeetingConfig(
+        val jmJoinMeetingConfig = JMJoinMeetingConfig(
             userRole = Speaker,
             isInitialAudioOn = isInitialAudioOn,
-            isInitialVideoOn = isInitialVideoOn,
+            isInitialVideoOn = isInitialVideoOn
         )
         setContent {
             LaunchCore(

@@ -108,6 +108,8 @@ class JioCoreSdkPlugin : FlutterPlugin, MethodCallHandler {
                         isChatEnabled = it.isChatEnabled
                         isMoreFeaturesEnabled = it.isMoreFeaturesEnabled
                         isParticipantPanelEnabled = it.isParticipantPanelEnabled
+                        isVideoFeatureEnabled = it.isVideoFeatureEnabled
+                        isRecordingLabelEnabled = it.isRecordingLabelEnabled
                     }
                     JioMeetCoreTemplateUiConfig.FeatureManager.MoreOptions.apply {
                         isAudioOnlyModeEnabled = it.isAudioOnlyModeEnabled
@@ -127,7 +129,7 @@ class JioCoreSdkPlugin : FlutterPlugin, MethodCallHandler {
             }
 
             Constants.MethodNames.LEAVEMEETING -> {
-                JioMeetSdkManager.instance.leaveCall()
+//                JioMeetSdkManager.instance.leaveCall()
             }
 
             Constants.MethodNames.SETAUTHPARAMS -> {
