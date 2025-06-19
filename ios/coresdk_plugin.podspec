@@ -5,7 +5,7 @@
 specVersion = '4.1.3'
 Pod::Spec.new do |s|
   s.name             = 'coresdk_plugin'
-  s.version          = '0.0.28'
+  s.version          = '0.0.29'
   s.summary          = 'A new Flutter plugin project.'
   s.description      = <<-DESC
 A new Flutter plugin project.

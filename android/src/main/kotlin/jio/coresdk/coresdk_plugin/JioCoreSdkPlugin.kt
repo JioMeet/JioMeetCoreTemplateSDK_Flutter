@@ -129,7 +129,7 @@ class JioCoreSdkPlugin : FlutterPlugin, MethodCallHandler {
             }
 
             Constants.MethodNames.LEAVEMEETING -> {
-//                JioMeetSdkManager.instance.leaveCall()
+               JioMeetSdkManager.instance?.leaveMeeting()
             }
 
             Constants.MethodNames.SETAUTHPARAMS -> {
