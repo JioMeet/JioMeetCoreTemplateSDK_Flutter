@@ -32,8 +32,7 @@ abstract class CoreSdkPluginPlatform extends PlatformInterface {
   }
 
   Future<void> leaveMeeting() {
-    throw UnimplementedError(
-        'leaveMeeting has not been implemented.');
+    throw UnimplementedError('leaveMeeting has not been implemented.');
   }
 
   Future<void> setEnvironment(String environment) {
@@ -50,5 +49,9 @@ abstract class CoreSdkPluginPlatform extends PlatformInterface {
 
   Future<void> setScreenShareConfig(ScreenshareConfig config) {
     throw UnimplementedError('setScreenShareConfig has not been implemented.');
+  }
+
+  Future<void> onMaximizeMeetingView() {
+    throw UnimplementedError('onMaximizeMeetingView has not been implemented.');
   }
 }

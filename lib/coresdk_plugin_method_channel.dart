@@ -15,20 +15,19 @@ class MethodChannelCoreSdkPlugin extends CoreSdkPluginPlatform {
   final methodChannel = const MethodChannel('coresdk_plugin');
 
   @override
-  Future<String?> launchMeetingCoreTemplateUi(MeetingDetails meeting_details) async {
-
-      final Map<String, dynamic> meeting_details_json = <String, dynamic>{
+  Future<String?> launchMeetingCoreTemplateUi(
+      MeetingDetails meeting_details) async {
+    final Map<String, dynamic> meeting_details_json = <String, dynamic>{
       'meeting_details': jsonEncode(meeting_details.toJson()),
     };
 
     return await methodChannel.invokeMethod<String>(
-        'launchMeetingCoreTemplateUi',meeting_details_json);
+        'launchMeetingCoreTemplateUi', meeting_details_json);
   }
 
   @override
   Future<String?> leaveMeeting() async {
-    return await methodChannel.invokeMethod<String>(
-        'leaveMeeting');
+    return await methodChannel.invokeMethod<String>('leaveMeeting');
   }
 
   @override
@@ -44,9 +43,9 @@ class MethodChannelCoreSdkPlugin extends CoreSdkPluginPlatform {
   Future<String?> setAuthParams(String token, String userId) async {
     final Map<String, dynamic> configParams = <String, dynamic>{
       'jwtToken': token,
-      'userId' : userId
+      'userId': userId
     };
-   return  await methodChannel.invokeMethod<String>(
+    return await methodChannel.invokeMethod<String>(
         'setAuthParams', configParams);
   }
 
@@ -55,7 +54,7 @@ class MethodChannelCoreSdkPlugin extends CoreSdkPluginPlatform {
     final Map<String, dynamic> configParams = <String, dynamic>{
       'config': config.toJson(),
     };
-     return await methodChannel.invokeMethod<String>(
+    return await methodChannel.invokeMethod<String>(
         'setCoreSdkConfig', configParams);
   }
 
@@ -68,4 +67,12 @@ class MethodChannelCoreSdkPlugin extends CoreSdkPluginPlatform {
         'setScreenShareConfig', configParams);
   }
 
+  @override
+  Future<void> onMaximizeMeetingView() async {
+    try {
+      await methodChannel.invokeMethod('onMaximizeMeetingView');
+    } on PlatformException catch (e) {
+      print("Failed to invoke callback: '${e.message}'.");
+    }
+  }
 }

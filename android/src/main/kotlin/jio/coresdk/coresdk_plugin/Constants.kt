@@ -16,6 +16,7 @@ class Constants {
         const val SETENVIRONMENT = "setEnvironment"
         const val SETCORESDKCONFIG = "setCoreSdkConfig"
         const val SETAUTHPARAMS = "setAuthParams"
+        const val MAXIMIZEMEETING = "onMaximizeMeetingView"
     }
 
     object Environments {

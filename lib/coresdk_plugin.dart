@@ -30,4 +30,8 @@ class JioCoreSdkPlugin {
   Future<void> setScreenShareConfig(ScreenshareConfig config) {
     return CoreSdkPluginPlatform.instance.setScreenShareConfig(config);
   }
+
+  Future<void> onMaximizeMeetingView() {
+    return CoreSdkPluginPlatform.instance.onMaximizeMeetingView();
+  }
 }

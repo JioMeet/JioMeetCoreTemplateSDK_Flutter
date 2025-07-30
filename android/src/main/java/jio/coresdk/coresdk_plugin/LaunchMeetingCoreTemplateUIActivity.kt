@@ -56,7 +56,10 @@ class LaunchMeetingCoreTemplateUIActivity : ComponentActivity() {
             Log.d("Listener onRemoteParticipantJoined", "$jmMeetingUser")
         }
 
-
+        override fun minimizeMeetingView() {
+            super.minimizeMeetingView()
+            JioCoreSdkPlugin.eventSink?.success("minimizeMeetingView")
+        }
     }
 
     private var requestPermissionLauncher = registerForActivityResult(

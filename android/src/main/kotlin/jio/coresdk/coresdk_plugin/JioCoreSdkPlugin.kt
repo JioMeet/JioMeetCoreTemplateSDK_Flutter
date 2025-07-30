@@ -24,7 +24,7 @@ class JioCoreSdkPlugin : FlutterPlugin, MethodCallHandler {
     private lateinit var context: Context
 
     companion object {
-        private lateinit var channel: MethodChannel
+        lateinit var channel: MethodChannel
         lateinit var eventChannel: EventChannel
         var eventSink: EventChannel.EventSink? = null
     }
@@ -37,6 +37,7 @@ class JioCoreSdkPlugin : FlutterPlugin, MethodCallHandler {
             override fun onListen(arguments: Any?, sink: EventChannel.EventSink?) {
                 eventSink = sink
             }
+
             override fun onCancel(arguments: Any?) {
                 eventSink = null
             }
@@ -52,7 +53,7 @@ class JioCoreSdkPlugin : FlutterPlugin, MethodCallHandler {
                 val meetingDetailsJson = call.argument<String>("meeting_details").toString()
                 val meetingDetails = MeetingDetails.fromJson(meetingDetailsJson)
                 meetingDetails?.let {
-                    val bundle : Bundle = Bundle().apply {
+                    val bundle: Bundle = Bundle().apply {
                         putString(
                             Constants.MeetingDetails.MEETINGID,
                             it.meetingId
@@ -110,6 +111,7 @@ class JioCoreSdkPlugin : FlutterPlugin, MethodCallHandler {
                         isParticipantPanelEnabled = it.isParticipantPanelEnabled
                         isVideoFeatureEnabled = it.isVideoFeatureEnabled
                         isRecordingLabelEnabled = it.isRecordingLabelEnabled
+                        headphonesOrEarpieceOnly = it.headphonesOrEarpieceOnly
                     }
                     JioMeetCoreTemplateUiConfig.FeatureManager.MoreOptions.apply {
                         isAudioOnlyModeEnabled = it.isAudioOnlyModeEnabled
@@ -124,6 +126,7 @@ class JioCoreSdkPlugin : FlutterPlugin, MethodCallHandler {
                         showMeetingTimer = it.showMeetingTimer
                         showMeetingTitle = it.showMeetingTitle
                         showConnectionStateIndicator = it.showConnectionStateIndicator
+                        enableAppMinimize = it.enableAppMinimize
                     }
                 }
             }
@@ -132,13 +135,17 @@ class JioCoreSdkPlugin : FlutterPlugin, MethodCallHandler {
                JioMeetSdkManager.instance?.leaveMeeting()
             }
 
+            Constants.MethodNames.MAXIMIZEMEETING -> {
+                JioMeetSdkManager.instance?.showTopBottomControls()
+            }
+
             Constants.MethodNames.SETAUTHPARAMS -> {
                 val authParams = JSONObject()
                 authParams.apply {
-                    put("user_id",call.argument<String>("userId").toString())
-                    put("jwt_token",call.argument<String>("jwtToken").toString())
+                    put("user_id", call.argument<String>("userId").toString())
+                    put("jwt_token", call.argument<String>("jwtToken").toString())
                 }
-             BaseUrl.setParameters(authParams.toString())
+                BaseUrl.setParameters(authParams.toString())
             }
 
             else -> {

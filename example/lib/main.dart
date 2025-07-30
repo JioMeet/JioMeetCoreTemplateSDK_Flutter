@@ -31,7 +31,10 @@ class _MyAppState extends State<MyApp> {
     coreSdkPluginCallbacks();
     _coresdkPlugin.setEnvironment(NetWorkEnvironment.prod);
     if (Platform.isIOS) {
-      var screenShareConfig = ScreenshareConfig(appGroupName: "group.com.jio.jiomeet.nativesdk", screenShareExtensionBundleIdentifier: "com.jio.jiomeet.nativesdk.broadcast");
+      var screenShareConfig = ScreenshareConfig(
+          appGroupName: "group.com.jio.jiomeet.nativesdk",
+          screenShareExtensionBundleIdentifier:
+              "com.jio.jiomeet.nativesdk.broadcast");
       _coresdkPlugin.setScreenShareConfig(screenShareConfig);
     }
   }
@@ -39,11 +42,11 @@ class _MyAppState extends State<MyApp> {
   Future<void> coreSdkPluginCallbacks() async {
     eventChannel.receiveBroadcastStream().listen((event) {
       if (event == "meetingStarted") {
-       setState(() {
-         _meetingStatus = "Started";
+        setState(() {
+          _meetingStatus = "Started";
         });
       }
-      
+
       if (event == "meetingEnded") {
         setState(() {
           _meetingStatus = "Ended";
@@ -56,16 +59,25 @@ class _MyAppState extends State<MyApp> {
         String? userId = event["userId"];
 
         if (eventType == "remoteUserJoinedMeeting") {
-          print( "Remote user joined: $name $userId");
+          print("Remote user joined: $name $userId");
         }
 
         if (eventType == "remoteUserLeftMeeting") {
-          print( "Remote user left: $name $userId");
+          print("Remote user left: $name $userId");
         }
       }
+
+      if (event == "minimizeMeetingView") {
+        print("On minimizeMeetingView");
+      }
     });
-    var config = SetCoreSdkConfig(enableFlipCamera: true, isMoreFeaturesEnabled:true, isShareEnabled: true);
-   await _coresdkPlugin.setConfig(config);
+    var config = SetCoreSdkConfig(
+        enableFlipCamera: true,
+        isMoreFeaturesEnabled: true,
+        isShareEnabled: true,
+        headphonesOrEarpieceOnly: true,
+        enableAppMinimize: true);
+    await _coresdkPlugin.setConfig(config);
   }
 
   @override
@@ -84,8 +96,14 @@ class _MyAppState extends State<MyApp> {
               TextButton(
                 onPressed: () async {
                   try {
-                  var meetingDetails = MeetingDetails(meetingId: "meeting_id", meetingPin: "meeting_password", displayName: "display_name", isInitialAudioOn: false, isInitialVideoOn: false);
-                  await _coresdkPlugin.launchMeetingCoreTemplateUi(meetingDetails);
+                    var meetingDetails = MeetingDetails(
+                        meetingId: "meetingId",
+                        meetingPin: "meetingPin",
+                        displayName: "display_name",
+                        isInitialAudioOn: false,
+                        isInitialVideoOn: false);
+                    await _coresdkPlugin
+                        .launchMeetingCoreTemplateUi(meetingDetails);
                   } on PlatformException {
                     _meetingStatus = "error while joining";
                   }

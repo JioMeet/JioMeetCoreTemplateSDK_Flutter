@@ -16,7 +16,8 @@ class SetCoreSdkConfig {
   bool isVideoFeatureEnabled = true;
   bool isRecordingLabelEnabled = true;
   bool isSpotlightFeatureEnabled = false;
-
+  bool headphonesOrEarpieceOnly = false;
+  bool enableAppMinimize = false;
 
   SetCoreSdkConfig(
       {required this.enableFlipCamera,
@@ -35,8 +36,9 @@ class SetCoreSdkConfig {
       this.isReactionEnabled = false,
       this.isVideoFeatureEnabled = true,
       this.isRecordingLabelEnabled = true,
-      this.isSpotlightFeatureEnabled = false
-      });
+      this.isSpotlightFeatureEnabled = false,
+      this.headphonesOrEarpieceOnly = false,
+      this.enableAppMinimize = false});
 
   Map<String, dynamic> toJson() {
     return {
@@ -56,7 +58,9 @@ class SetCoreSdkConfig {
       'isReactionEnabled': isReactionEnabled,
       'isVideoFeatureEnabled': isVideoFeatureEnabled,
       'isRecordingLabelEnabled': isRecordingLabelEnabled,
-      'isSpotlightFeatureEnabled': isSpotlightFeatureEnabled
+      'isSpotlightFeatureEnabled': isSpotlightFeatureEnabled,
+      'headphonesOrEarpieceOnly': headphonesOrEarpieceOnly,
+      'enableAppMinimize': enableAppMinimize
     };
   }
 }
