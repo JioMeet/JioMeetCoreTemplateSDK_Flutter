@@ -45,6 +45,8 @@ public class JioCoreSdkPlugin: NSObject, FlutterPlugin {
             setConfigValues(data: arguments)
         case "setAuthParams":
             setUserLogin(data: arguments)
+        case "onMaximizeMeetingView":
+            maximizeMeetingView()
         default:
             result(FlutterMethodNotImplemented)
         }
@@ -77,6 +79,10 @@ public class JioCoreSdkPlugin: NSObject, FlutterPlugin {
     
     private func setScreenShareConfig(data: [String: Any]) {
         jmMeetigHandler.setScreenShareConfig(data: data)
+    }
+    
+    private func maximizeMeetingView() {
+        jmMeetigHandler.maximizeMeetingView()
     }
 }
 
