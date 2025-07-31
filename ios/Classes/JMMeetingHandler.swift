@@ -166,9 +166,8 @@ class JMMeetingHandler: NSObject {
     
     func maximizeMeetingView() {
         // Show top and bottom controls for the meeting view
-        // This is equivalent to Android's showTopBottomControls()
         DispatchQueue.main.async {
-            self.jioMeetView.maximizeMeetingView() //showTopBottomControls()
+            self.jioMeetView.maximizeMeetingView()
         }
     }
     
