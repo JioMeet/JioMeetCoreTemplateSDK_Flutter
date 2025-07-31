@@ -145,6 +145,7 @@ class JMMeetingHandler: NSObject {
         if let isSpotlightFeatureEnabled = config["isSpotlightFeatureEnabled"] as? Bool {
             JMUIKit.isSpotlightFeatureEnabled = isSpotlightFeatureEnabled
         }
+        JMUIKit.isAudioFromExternalSource = true
         JMUIKit.showThankYouScreen = false
     }
     
@@ -160,6 +161,14 @@ class JMMeetingHandler: NSObject {
     func removeJioMeetView(){
         DispatchQueue.main.async {
             self.jioMeetView.removeFromSuperview()
+        }
+    }
+    
+    func maximizeMeetingView() {
+        // Show top and bottom controls for the meeting view
+        // This is equivalent to Android's showTopBottomControls()
+        DispatchQueue.main.async {
+            self.jioMeetView.maximizeMeetingView() //showTopBottomControls()
         }
     }
     
@@ -241,6 +250,12 @@ class JMMeetingHandler: NSObject {
 extension JMMeetingHandler: JMMeetingViewDelegate {
     func didLocalUserJoinsMeeting() {
         JioCoreSdkPlugin.eventSink?("meetingStarted")
+    }
+    
+    func minimizeMeetingView() {
+        // This callback is triggered when the meeting view is minimized
+        // Equivalent to Android's minimizeMeetingView() callback
+        JioCoreSdkPlugin.eventSink?("minimizeMeetingView")
     }
         
     func didLocalUserExitsMeetingView() {
