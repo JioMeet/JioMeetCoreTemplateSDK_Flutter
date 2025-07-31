@@ -145,7 +145,12 @@ class JMMeetingHandler: NSObject {
         if let isSpotlightFeatureEnabled = config["isSpotlightFeatureEnabled"] as? Bool {
             JMUIKit.isSpotlightFeatureEnabled = isSpotlightFeatureEnabled
         }
-        JMUIKit.isAudioFromExternalSource = true
+        if let headphonesOrEarpieceOnly = config["headphonesOrEarpieceOnly"] as? Bool {
+            JMUIKit.headphonesOrEarpieceOnly = headphonesOrEarpieceOnly
+        }
+        if let enableAppMinimize = config["enableAppMinimize"] as? Bool {
+            JMUIKit.enableAppMinimize = enableAppMinimize
+        }
         JMUIKit.showThankYouScreen = false
     }
     
