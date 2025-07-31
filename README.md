@@ -50,7 +50,7 @@ You need to  add the necessary configurations to your   project's `pubspec.yaml`
    coresdk_plugin:
       git:
          url: https://github.com/JioMeet/JioMeetCoreTemplateSDK_Flutter.git
-         ref: 0.0.29
+         ref: 0.0.30
 ```
 
 ### Android:
@@ -361,13 +361,22 @@ Future<void> coreSdkPluginCallbacks() async {
           print( "Remote user left: $name $userId");
         }
     }
+
+    if (event == "minimizeMeetingView") {
+        print("On Minimize Meeting View");
+    }
   });
 }
 ```
 #### config features, like we have to enable/disable the feature of switch camera, screen share, participant panel
 we can find all feature flags in SetCoreSdkConfig class.
 `````dart
-   var config = SetCoreSdkConfig(enableFlipCamera: true);
+   var config = SetCoreSdkConfig(enableFlipCamera: true,
+                                enableFlipCamera: true,
+                                isMoreFeaturesEnabled: true,
+                                isShareEnabled: true,
+                                headphonesOrEarpieceOnly: true,
+                                enableAppMinimize: true);
 await _coresdkPlugin.setConfig(config);
 `````
 
@@ -426,7 +435,11 @@ class _MyAppState extends State<MyApp> {
             if (eventType == "remoteUserLeftMeeting") {
                 print( "Remote user left: $name $userId");
             }
-      }
+         }
+
+        if (event == "minimizeMeetingView") {
+            print("On Minimize Meeting View");
+        }
     });
   }
 
