@@ -136,7 +136,7 @@ class JioCoreSdkPlugin : FlutterPlugin, MethodCallHandler {
             }
 
             Constants.MethodNames.MAXIMIZEMEETING -> {
-                JioMeetSdkManager.instance?.showTopBottomControls()
+                JioMeetSdkManager.instance?.showMeetingControls()
             }
 
             Constants.MethodNames.SETAUTHPARAMS -> {

@@ -34,7 +34,7 @@ class _MyAppState extends State<MyApp> {
       var screenShareConfig = ScreenshareConfig(
           appGroupName: "group.com.jio.jiomeet.nativesdk",
           screenShareExtensionBundleIdentifier:
-              "com.jio.jiomeet.nativesdk.broadcast");
+          "com.jio.jiomeet.nativesdk.broadcast");
       _coresdkPlugin.setScreenShareConfig(screenShareConfig);
     }
   }

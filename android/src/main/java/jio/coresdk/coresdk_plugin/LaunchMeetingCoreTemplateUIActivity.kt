@@ -1,7 +1,11 @@
 package jio.coresdk.coresdk_plugin
 
+import android.app.PictureInPictureParams
+import android.content.pm.PackageManager
+import android.os.Build
 import android.os.Bundle
 import android.util.Log
+import android.util.Rational
 import android.widget.Toast
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
@@ -13,6 +17,7 @@ import com.jiomeet.core.main.models.JMMeetingUser
 import com.jiomeet.core.main.models.Speaker
 import com.jiomeet.core.utils.BaseUrl
 import org.jio.sdk.sdkmanager.JioMeetConnectionListener
+import org.jio.sdk.sdkmanager.JioMeetSdkManager
 import org.jio.sdk.templates.core.LaunchCore
 
 class LaunchMeetingCoreTemplateUIActivity : ComponentActivity() {
@@ -56,9 +61,10 @@ class LaunchMeetingCoreTemplateUIActivity : ComponentActivity() {
             Log.d("Listener onRemoteParticipantJoined", "$jmMeetingUser")
         }
 
-        override fun minimizeMeetingView() {
-            super.minimizeMeetingView()
+        override fun onMinimizeMeetingView() {
+            super.onMinimizeMeetingView()
             JioCoreSdkPlugin.eventSink?.success("minimizeMeetingView")
+            enterPictureInPictureModeIfSupported()
         }
     }
 
@@ -122,6 +128,43 @@ class LaunchMeetingCoreTemplateUIActivity : ComponentActivity() {
                 jmJoinMeetingConfig = jmJoinMeetingConfig,
                 jmJoinMeetingData = jmJoinMeetingData
             )
+        }
+    }
+
+    private fun enterPictureInPictureModeIfSupported() {
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O &&
+            packageManager.hasSystemFeature(PackageManager.FEATURE_PICTURE_IN_PICTURE)
+        ) {
+            try {
+                val aspectRatio = Rational(9, 16)
+                val params = PictureInPictureParams.Builder()
+                    .setAspectRatio(aspectRatio)
+                    .build()
+                val entered = enterPictureInPictureMode(params)
+                if (!entered) {
+                    Log.w("LaunchMeeting", "PiP not entered; moving task to back")
+                    moveTaskToBack(true)
+                }
+            } catch (t: Throwable) {
+                Log.w("LaunchMeeting", "Failed to enter PiP", t)
+                moveTaskToBack(true)
+            }
+        } else {
+            // PiP not supported on this device/API. Keep activity alive in background.
+            moveTaskToBack(true)
+        }
+    }
+
+    override fun onPictureInPictureModeChanged(
+        isInPictureInPictureMode: Boolean
+    ) {
+        super.onPictureInPictureModeChanged(isInPictureInPictureMode)
+        if (!isInPictureInPictureMode) {
+            try {
+                JioMeetSdkManager.instance?.showMeetingControls()
+            } catch (t: Throwable) {
+                Log.w("LaunchMeeting", "Failed to show controls on PiP exit", t)
+            }
         }
     }
 }
