@@ -48,6 +48,10 @@
             tools:replace="android:name"
             android:name=".LaunchMeetingCoreTemplateUIActivity"
             android:exported="false"
+            android:launchMode="singleTask"
+            android:supportsPictureInPicture="true"
+            android:resizeableActivity="true"
+            android:configChanges="screenSize|smallestScreenSize|screenLayout|orientation|uiMode|layoutDirection|density"
             android:screenOrientation="portrait"/>
         <service
             android:name="org.jio.sdk.service.OnGoingScreenShareService"
