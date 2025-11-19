@@ -75,4 +75,18 @@ class MethodChannelCoreSdkPlugin extends CoreSdkPluginPlatform {
       print("Failed to invoke callback: '${e.message}'.");
     }
   }
+
+  @override
+  Future<void> exitPipMode() async {
+    try {
+      await methodChannel.invokeMethod('exitPipMode');
+    } on PlatformException catch (e) {
+      print("Failed to exit PiP: '${e.message}'.");
+    } catch (e) {
+      // In case native side hasn't implemented yet, fallback to maximize behavior.
+      try {
+        await methodChannel.invokeMethod('onMaximizeMeetingView');
+      } catch (_) {}
+    }
+  }
 }

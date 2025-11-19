@@ -1,10 +1,13 @@
 package jio.coresdk.coresdk_plugin
 
+import android.app.Activity
 import android.content.Context
 import android.content.Intent
 import android.os.Bundle
 import com.jiomeet.core.constant.Constant
 import io.flutter.embedding.engine.plugins.FlutterPlugin
+import io.flutter.embedding.engine.plugins.activity.ActivityAware
+import io.flutter.embedding.engine.plugins.activity.ActivityPluginBinding
 import io.flutter.plugin.common.MethodCall
 import io.flutter.plugin.common.MethodChannel
 import io.flutter.plugin.common.MethodChannel.MethodCallHandler
@@ -19,9 +22,10 @@ import org.jio.sdk.sdkmanager.JioMeetSdkManager
 
 
 /** JioCoreSdkPlugin */
-class JioCoreSdkPlugin : FlutterPlugin, MethodCallHandler {
+class JioCoreSdkPlugin : FlutterPlugin, MethodCallHandler, ActivityAware {
 
     private lateinit var context: Context
+    private var activity: Activity? = null
 
     companion object {
         lateinit var channel: MethodChannel
@@ -139,6 +143,18 @@ class JioCoreSdkPlugin : FlutterPlugin, MethodCallHandler {
                 JioMeetSdkManager.instance?.showMeetingControls()
             }
 
+            Constants.MethodNames.EXITPIPMODE -> {
+                val meetingActivity = ActivityRefHolder.meetingActivityRef?.get()
+                if (meetingActivity != null) {
+                    JioMeetSdkManager.instance?.exitPipMode(meetingActivity)
+                } else {
+                    val intent = Intent(context, LaunchMeetingCoreTemplateUIActivity::class.java)
+                    intent.addFlags(Intent.FLAG_ACTIVITY_REORDER_TO_FRONT or Intent.FLAG_ACTIVITY_NEW_TASK)
+                    context.startActivity(intent)
+                }
+                result.success(null)
+            }
+
             Constants.MethodNames.SETAUTHPARAMS -> {
                 val authParams = JSONObject()
                 authParams.apply {
@@ -165,5 +181,22 @@ class JioCoreSdkPlugin : FlutterPlugin, MethodCallHandler {
         intent.putExtras(bundle)
         intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
         context.startActivity(intent)
+    }
+
+    // ActivityAware implementation to capture current activity for PiP exit
+    override fun onAttachedToActivity(binding: ActivityPluginBinding) {
+        activity = binding.activity
+    }
+
+    override fun onDetachedFromActivityForConfigChanges() {
+        activity = null
+    }
+
+    override fun onReattachedToActivityForConfigChanges(binding: ActivityPluginBinding) {
+        activity = binding.activity
+    }
+
+    override fun onDetachedFromActivity() {
+        activity = null
     }
 }

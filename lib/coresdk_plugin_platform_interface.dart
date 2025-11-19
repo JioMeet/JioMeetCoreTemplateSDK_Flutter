@@ -54,4 +54,8 @@ abstract class CoreSdkPluginPlatform extends PlatformInterface {
   Future<void> onMaximizeMeetingView() {
     throw UnimplementedError('onMaximizeMeetingView has not been implemented.');
   }
+
+  Future<void> exitPipMode() {
+    throw UnimplementedError('exitPipMode has not been implemented.');
+  }
 }

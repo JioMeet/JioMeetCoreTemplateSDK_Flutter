@@ -34,4 +34,8 @@ class JioCoreSdkPlugin {
   Future<void> onMaximizeMeetingView() {
     return CoreSdkPluginPlatform.instance.onMaximizeMeetingView();
   }
+
+  Future<void> exitPipMode() {
+    return CoreSdkPluginPlatform.instance.exitPipMode();
+  }
 }

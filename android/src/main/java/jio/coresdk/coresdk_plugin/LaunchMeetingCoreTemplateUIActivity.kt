@@ -19,6 +19,7 @@ import com.jiomeet.core.utils.BaseUrl
 import org.jio.sdk.sdkmanager.JioMeetConnectionListener
 import org.jio.sdk.sdkmanager.JioMeetSdkManager
 import org.jio.sdk.templates.core.LaunchCore
+import java.lang.ref.WeakReference
 
 class LaunchMeetingCoreTemplateUIActivity : ComponentActivity() {
     private val jioMeetConnectionListener = object : JioMeetConnectionListener {
@@ -85,6 +86,7 @@ class LaunchMeetingCoreTemplateUIActivity : ComponentActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+        ActivityRefHolder.meetingActivityRef = WeakReference(this)
         if (!HelperClass.isInternetAvailable(this)) {
             Toast.makeText(
                 applicationContext,
@@ -97,6 +99,11 @@ class LaunchMeetingCoreTemplateUIActivity : ComponentActivity() {
         } else {
             requestPermissionLauncher.launch(PermissionConstant.requiredPermissions)
         }
+    }
+
+    override fun onDestroy() {
+        super.onDestroy()
+        ActivityRefHolder.meetingActivityRef = null
     }
 
     private fun openMeetingCoreTemplateUI() {
