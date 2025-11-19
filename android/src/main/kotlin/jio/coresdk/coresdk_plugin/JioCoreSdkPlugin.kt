@@ -1,10 +1,17 @@
 package jio.coresdk.coresdk_plugin
 
+import android.app.Activity
+import android.app.PictureInPictureParams
 import android.content.Context
 import android.content.Intent
 import android.os.Bundle
+import android.os.Build
+import android.content.pm.PackageManager
+import android.util.Rational
 import com.jiomeet.core.constant.Constant
 import io.flutter.embedding.engine.plugins.FlutterPlugin
+import io.flutter.embedding.engine.plugins.activity.ActivityAware
+import io.flutter.embedding.engine.plugins.activity.ActivityPluginBinding
 import io.flutter.plugin.common.MethodCall
 import io.flutter.plugin.common.MethodChannel
 import io.flutter.plugin.common.MethodChannel.MethodCallHandler
@@ -19,9 +26,10 @@ import org.jio.sdk.sdkmanager.JioMeetSdkManager
 
 
 /** JioCoreSdkPlugin */
-class JioCoreSdkPlugin : FlutterPlugin, MethodCallHandler {
+class JioCoreSdkPlugin : FlutterPlugin, MethodCallHandler, ActivityAware {
 
     private lateinit var context: Context
+    private var activity: Activity? = null
 
     companion object {
         lateinit var channel: MethodChannel
@@ -139,6 +147,18 @@ class JioCoreSdkPlugin : FlutterPlugin, MethodCallHandler {
                 JioMeetSdkManager.instance?.showMeetingControls()
             }
 
+            Constants.MethodNames.EXITPIPMODE -> {
+                val meetingActivity = ActivityRefHolder.meetingActivityRef?.get()
+                if (meetingActivity != null) {
+                    JioMeetSdkManager.instance?.exitPipMode(meetingActivity)
+                } else {
+                    val intent = Intent(context, LaunchMeetingCoreTemplateUIActivity::class.java)
+                    intent.addFlags(Intent.FLAG_ACTIVITY_REORDER_TO_FRONT or Intent.FLAG_ACTIVITY_NEW_TASK)
+                    context.startActivity(intent)
+                }
+                result.success(null)
+            }
+
             Constants.MethodNames.SETAUTHPARAMS -> {
                 val authParams = JSONObject()
                 authParams.apply {
@@ -146,6 +166,24 @@ class JioCoreSdkPlugin : FlutterPlugin, MethodCallHandler {
                     put("jwt_token", call.argument<String>("jwtToken").toString())
                 }
                 BaseUrl.setParameters(authParams.toString())
+            }
+
+            Constants.MethodNames.ENTERPIPMODE -> {
+                val meetingActivity = ActivityRefHolder.meetingActivityRef?.get()
+                if (meetingActivity != null) {
+                    if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O &&
+                        meetingActivity.packageManager.hasSystemFeature(PackageManager.FEATURE_PICTURE_IN_PICTURE)
+                    ) {
+                        try {
+                            val params = PictureInPictureParams.Builder()
+                                .setAspectRatio(Rational(9, 16))
+                                .build()
+                            meetingActivity.enterPictureInPictureMode(params)
+                        } catch (_: Throwable) {
+                        }
+                    }
+                }
+                result.success(null)
             }
 
             else -> {
@@ -165,5 +203,22 @@ class JioCoreSdkPlugin : FlutterPlugin, MethodCallHandler {
         intent.putExtras(bundle)
         intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
         context.startActivity(intent)
+    }
+
+    // ActivityAware implementation to capture current activity for PiP exit
+    override fun onAttachedToActivity(binding: ActivityPluginBinding) {
+        activity = binding.activity
+    }
+
+    override fun onDetachedFromActivityForConfigChanges() {
+        activity = null
+    }
+
+    override fun onReattachedToActivityForConfigChanges(binding: ActivityPluginBinding) {
+        activity = binding.activity
+    }
+
+    override fun onDetachedFromActivity() {
+        activity = null
     }
 }

@@ -110,6 +110,29 @@ class _MyAppState extends State<MyApp> {
                 },
                 child: const Text('Join Meeting'),
               ),
+              const SizedBox(height: 8),
+              if (Platform.isAndroid && _meetingStatus == "Started")
+                TextButton(
+                  onPressed: () async {
+                    try {
+                      await _coresdkPlugin.exitPipMode();
+                    } on PlatformException {
+                      // ignore
+                    }
+                  },
+                  child: const Text('Exit PIP'),
+                ),
+              if (Platform.isAndroid && _meetingStatus == "Started")
+                TextButton(
+                  onPressed: () async {
+                    try {
+                      await _coresdkPlugin.enterPipMode();
+                    } on PlatformException {
+                      // ignore
+                    }
+                  },
+                  child: const Text('Enter PIP'),
+                ),
             ],
           ),
         ),
